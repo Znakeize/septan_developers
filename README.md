@@ -1,59 +1,192 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Septan Developers Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern Laravel-based website for Septan Developers - Expert construction design, consultation, and engineering services.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- ✅ Project Management (Add, Edit, Delete)
+- ✅ Blog Article Management (Add, Edit, Delete)
+- ✅ User Authentication (Login, Sign Up)
+- ✅ Admin Dashboard with Statistics
+- ✅ Dynamic Project & Blog Display
+- ✅ Image Upload & Gallery Management
+- ✅ SEO-Friendly URLs (Slug-based)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Technology Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend**: Laravel 11.x
+- **Frontend**: HTML, CSS, JavaScript
+- **Database**: MySQL
+- **Server**: PHP 8.2+
 
-## Learning Laravel
+## Project Structure
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```
+septan_developers/
+├── app/                          # Application core
+│   ├── Http/
+│   │   └── Controllers/          # Application controllers
+│   │       ├── Admin/           # Admin panel controllers
+│   │       ├── Auth/             # Authentication controllers
+│   │       ├── BlogController.php
+│   │       └── ProjectController.php
+│   └── Models/                   # Eloquent models
+│       ├── Blog.php
+│       ├── Project.php
+│       └── User.php
+├── config/                        # Configuration files
+├── database/
+│   └── migrations/               # Database migrations
+├── docs/                         # Documentation
+│   ├── BACKEND_SETUP.md         # Backend setup guide
+│   └── XAMPP_SETUP.md           # XAMPP configuration guide
+├── public/                       # Public assets
+│   ├── assets/                   # CSS, JS, Images
+│   └── storage/                  # Storage symlink
+├── resources/
+│   └── views/                    # Blade templates
+│       ├── admin/                # Admin panel views
+│       ├── auth/                # Authentication views
+│       ├── blogs/               # Blog views
+│       ├── projects/             # Project views
+│       └── Home.blade.php       # Homepage
+├── routes/
+│   ├── auth.php                 # Authentication routes
+│   └── web.php                  # Web routes
+├── storage/                      # Storage directory
+│   └── app/
+│       └── public/              # Uploaded files
+│           ├── projects/         # Project images
+│           └── blogs/            # Blog images
+└── vendor/                       # Composer dependencies
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Quick Start
 
-## Laravel Sponsors
+### Prerequisites
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- PHP 8.2 or higher
+- Composer
+- MySQL
+- XAMPP (Windows) or Apache/Nginx
 
-### Premium Partners
+### Installation
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1. **Clone the repository** (or navigate to project directory)
 
-## Contributing
+2. **Install dependencies**
+   ```bash
+   composer install
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. **Environment Setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+   Update `.env` with your database credentials.
 
-## Code of Conduct
+4. **Run Migrations**
+   ```bash
+   php artisan migrate
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. **Create Storage Link**
+   ```bash
+   php artisan storage:link
+   ```
 
-## Security Vulnerabilities
+6. **Create Admin User**
+   ```bash
+   php artisan tinker
+   ```
+   Then:
+   ```php
+   App\Models\User::create([
+       'name' => 'Admin',
+       'email' => 'admin@example.com',
+       'password' => Hash::make('your-password'),
+   ]);
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Running the Application
+
+#### Option 1: Laravel Development Server
+```bash
+php artisan serve
+```
+Access at: `http://localhost:8000`
+
+#### Option 2: XAMPP/Apache
+- Place project in `htdocs` directory
+- Access via: `http://localhost/Project/septan_developers/public/`
+- See `docs/XAMPP_SETUP.md` for detailed configuration
+
+## Admin Panel
+
+- **Login**: `/login`
+- **Dashboard**: `/admin`
+- **Projects**: `/admin/projects`
+- **Blogs**: `/admin/blogs`
+
+**Default Admin Credentials** (if created via setup):
+- Email: `admin@septan.com`
+- Password: `admin123`
+
+⚠️ **Important**: Change the default password after first login!
+
+## Routes
+
+### Public Routes
+- `/` - Homepage
+- `/projects` - Projects listing
+- `/projects/{slug}` - Individual project page
+- `/blogs` - Blog listing
+- `/blogs/{slug}` - Individual blog article
+
+### Admin Routes (Protected)
+- `/admin` - Admin dashboard
+- `/admin/projects` - Project management
+- `/admin/blogs` - Blog management
+
+### Authentication Routes
+- `/login` - Login page
+- `/register` - Registration page
+- `/logout` - Logout (POST)
+
+## File Uploads
+
+Uploaded files are stored in:
+- `storage/app/public/projects/` - Project main images
+- `storage/app/public/projects/gallery/` - Project gallery images
+- `storage/app/public/blogs/` - Blog featured images
+
+Files are accessible via `/storage/` URL after running `php artisan storage:link`.
+
+## Documentation
+
+- **Backend Setup**: See `docs/BACKEND_SETUP.md`
+- **XAMPP Configuration**: See `docs/XAMPP_SETUP.md`
+
+## Development
+
+### Running Tests
+```bash
+php artisan test
+```
+
+### Clearing Cache
+```bash
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Copyright © 2025 Septan Developers. All rights reserved.
+
+## Support
+
+For issues or questions, contact the development team.

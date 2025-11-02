@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Project - Septan Developers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f5f5f5; }
+        
+        .admin-container { display: flex; min-height: 100vh; }
+        .sidebar { width: 260px; background: #1a1a1a; color: #fff; padding: 20px 0; position: fixed; height: 100vh; overflow-y: auto; }
+        .sidebar-header { padding: 0 20px 30px; border-bottom: 1px solid #333; }
+        .sidebar-header h2 { font-size: 24px; color: #ff4b33; }
+        .sidebar-menu { padding: 20px 0; }
+        .menu-item { padding: 12px 20px; color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 12px; transition: all 0.3s; }
+        .menu-item:hover, .menu-item.active { background: #ff4b33; color: #fff; }
+        
+        .main-content { flex: 1; margin-left: 260px; padding: 30px; }
+        .form-container { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 1000px; }
+        .form-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .form-header h1 { font-size: 28px; color: #1a1a1a; }
+        .back-btn { color: #666; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #333; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+        .form-group textarea { min-height: 150px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full-width { grid-column: 1 / -1; }
+        
+        .input-group { position: relative; }
+        .input-group i { position: absolute; left: 12px; top: 14px; color: #999; font-size: 1.1rem; z-index: 1; }
+        .input-group input, .input-group textarea, .input-group select {
+            width: 100%; padding: 12px 12px 12px 42px; border: 1px solid #ddd; border-radius: 6px;
+            color: #333; font-size: 14px; transition: border 0.3s ease;
+        }
+        .input-group input:focus, .input-group textarea:focus, .input-group select:focus { outline: none; border-color: #ff4b33; }
+        
+        .drop-zone {
+            position: relative; width: 100%; min-height: 140px; background: #f9f9f9; border: 2px dashed #ddd;
+            border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: #999; font-size: 0.95rem; transition: all 0.3s ease; cursor: pointer; padding: 20px;
+        }
+        .drop-zone:hover, .drop-zone.dragover { border-color: #ff4b33; background: #fff5f5; color: #ff4b33; }
+        .drop-zone i { font-size: 2.5rem; margin-bottom: 10px; color: #999; }
+        .drop-zone.dragover i { color: #ff4b33; }
+        .drop-zone input { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .file-list { margin-top: 10px; font-size: 0.85rem; color: #666; max-height: 80px; overflow-y: auto; width: 100%; }
+        
+        .image-preview { margin-top: 10px; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; max-height: 250px; overflow-y: auto; border-radius: 8px; }
+        .image-preview img { width: 100%; height: 100px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd; }
+        
+        .checkbox-group { display: flex; align-items: center; gap: 10px; }
+        .checkbox-group input { width: auto; }
+        
+        .btn-group { display: flex; gap: 15px; margin-top: 30px; }
+        .btn { padding: 12px 24px; border-radius: 6px; font-weight: 500; border: none; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary { background: #ff4b33; color: #fff; }
+        .btn-primary:hover { background: #e63e28; }
+        .btn-secondary { background: #6b7280; color: #fff; }
+        .btn-secondary:hover { background: #4b5563; }
+        
+        .error { color: #ef4444; font-size: 13px; margin-top: 5px; }
+        .help-text { font-size: 12px; color: #999; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>SEPTAN ADMIN</h2>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="{{ route('admin.dashboard') }}" class="menu-item">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="{{ route('admin.projects.index') }}" class="menu-item active">
+                    <i class="fas fa-building"></i> Projects
+                </a>
+                <a href="{{ route('admin.blogs.index') }}" class="menu-item">
+                    <i class="fas fa-newspaper"></i> Blog Articles
+                </a>
+                <a href="{{ route('home') }}" class="menu-item">
+                    <i class="fas fa-globe"></i> View Website
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="form-container">
+                <div class="form-header">
+                    <h1>ADD <span style="color: #ff4b33;">NEW</span> PROJECT</h1>
+                    <a href="{{ route('admin.projects.index') }}" class="back-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Projects
+                    </a>
+                </div>
+
+                <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data" id="project-form">
+                    @csrf
+
+                    <div class="form-row">
+                        <div class="form-group input-group">
+                            <i class="fas fa-building"></i>
+                            <input type="text" id="title" name="title" placeholder="Project Name" value="{{ old('title') }}" required>
+                        </div>
+                        <div class="form-group input-group">
+                            <i class="fas fa-project-diagram"></i>
+                            <select id="type" name="type" required>
+                                <option value="" disabled selected>Select Type</option>
+                                <option value="Eco-Friendly Resort" {{ old('type') == 'Eco-Friendly Resort' ? 'selected' : '' }}>Eco-Friendly Resort</option>
+                                <option value="Sustainable Office" {{ old('type') == 'Sustainable Office' ? 'selected' : '' }}>Sustainable Office</option>
+                                <option value="Minimalist Villa" {{ old('type') == 'Minimalist Villa' ? 'selected' : '' }}>Minimalist Villa</option>
+                                <option value="Heritage Restoration" {{ old('type') == 'Heritage Restoration' ? 'selected' : '' }}>Heritage Restoration</option>
+                                <option value="Wellness Center" {{ old('type') == 'Wellness Center' ? 'selected' : '' }}>Wellness Center</option>
+                                <option value="Green Hotel" {{ old('type') == 'Green Hotel' ? 'selected' : '' }}>Green Hotel</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group input-group">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="location" name="location" placeholder="Location" value="{{ old('location') }}" required>
+                        </div>
+                        <div class="form-group input-group">
+                            <i class="fas fa-calendar-alt"></i>
+                            <input type="text" id="year" name="year" placeholder="Year" value="{{ old('year', date('Y')) }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group input-group">
+                            <i class="fas fa-tag"></i>
+                            <select id="category" name="category" required>
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="residential" {{ old('category') == 'residential' ? 'selected' : '' }}>Residential</option>
+                                <option value="commercial" {{ old('category') == 'commercial' ? 'selected' : '' }}>Commercial</option>
+                                <option value="renovation" {{ old('category') == 'renovation' ? 'selected' : '' }}>Renovation</option>
+                            </select>
+                        </div>
+                        <div class="form-group input-group">
+                            <i class="fas fa-video"></i>
+                            <input type="text" id="video_url" name="video_url" placeholder="YouTube Video URL (Optional)" value="{{ old('video_url') }}">
+                            <div class="help-text">Example: https://www.youtube.com/watch?v=OU4CpZUUJTU</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group full-width">
+                        <i class="fas fa-paragraph"></i>
+                        <textarea id="description" name="description" placeholder="Project Description" required>{{ old('description') }}</textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label style="margin-bottom: 10px; display: block;">Main Image *</label>
+                        <div class="drop-zone" id="main-image-drop-zone">
+                            <i class="fas fa-image"></i>
+                            <p>Drop main image here or click to select</p>
+                            <input type="file" id="main_image" name="main_image" accept="image/*" required>
+                        </div>
+                        <div class="image-preview" id="main-image-preview" style="display: none;"></div>
+                        @error('main_image')<div class="error">{{ $message }}</div>@enderror
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label style="margin-bottom: 10px; display: block;">Gallery Images (Optional)</label>
+                        <div class="drop-zone" id="gallery-drop-zone">
+                            <i class="fas fa-images"></i>
+                            <p>Drag & drop gallery images here<br>or click to select multiple</p>
+                            <input type="file" id="gallery_images" name="gallery_images[]" accept="image/*" multiple>
+                            <div class="file-list" id="gallery-file-list"></div>
+                        </div>
+                        <div class="image-preview" id="gallery-preview"></div>
+                        @error('gallery_images.*')<div class="error">{{ $message }}</div>@enderror
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="client_name" name="client_name" placeholder="Client Name (Optional)" value="{{ old('client_name') }}">
+                        </div>
+                        <div class="form-group input-group">
+                            <i class="fas fa-ruler-combined"></i>
+                            <input type="number" step="0.01" id="project_area" name="project_area" placeholder="Project Area (sq ft)" value="{{ old('project_area') }}">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group input-group">
+                            <i class="fas fa-calendar"></i>
+                            <input type="date" id="start_date" name="start_date" value="{{ old('start_date') }}">
+                        </div>
+                        <div class="form-group input-group">
+                            <i class="fas fa-calendar-check"></i>
+                            <input type="date" id="completion_date" name="completion_date" value="{{ old('completion_date') }}">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="is_published" name="is_published" value="1" {{ old('is_published', true) ? 'checked' : '' }}>
+                                <label for="is_published" style="margin: 0;">Published</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }}>
+                                <label for="is_featured" style="margin: 0;">Featured</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Project
+                        </button>
+                        <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Main image drag & drop
+        const mainDropZone = document.getElementById('main-image-drop-zone');
+        const mainFileInput = document.getElementById('main_image');
+        const mainPreview = document.getElementById('main-image-preview');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => {
+            mainDropZone.addEventListener(e, preventDefaults);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(e => {
+            mainDropZone.addEventListener(e, () => mainDropZone.classList.add('dragover'));
+        });
+
+        ['dragleave', 'drop'].forEach(e => {
+            mainDropZone.addEventListener(e, () => mainDropZone.classList.remove('dragover'));
+        });
+
+        mainDropZone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                mainFileInput.files = files;
+                previewMainImage(files[0]);
+            }
+        });
+
+        mainFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                previewMainImage(e.target.files[0]);
+            }
+        });
+
+        function previewMainImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                mainPreview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                mainPreview.style.display = 'grid';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Gallery images drag & drop
+        const galleryDropZone = document.getElementById('gallery-drop-zone');
+        const galleryFileInput = document.getElementById('gallery_images');
+        const galleryFileList = document.getElementById('gallery-file-list');
+        const galleryPreview = document.getElementById('gallery-preview');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => {
+            galleryDropZone.addEventListener(e, preventDefaults);
+        });
+
+        ['dragenter', 'dragover'].forEach(e => {
+            galleryDropZone.addEventListener(e, () => galleryDropZone.classList.add('dragover'));
+        });
+
+        ['dragleave', 'drop'].forEach(e => {
+            galleryDropZone.addEventListener(e, () => galleryDropZone.classList.remove('dragover'));
+        });
+
+        galleryDropZone.addEventListener('drop', (e) => {
+            handleGalleryFiles(e.dataTransfer.files);
+        });
+
+        galleryFileInput.addEventListener('change', (e) => {
+            handleGalleryFiles(e.target.files);
+        });
+
+        function handleGalleryFiles(files) {
+            galleryPreview.innerHTML = '';
+            galleryFileList.innerHTML = '';
+            
+            if (files.length > 0) {
+                Array.from(files).forEach((file, i) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        galleryPreview.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+
+                    const div = document.createElement('div');
+                    div.textContent = `${i+1}. ${file.name}`;
+                    galleryFileList.appendChild(div);
+                });
+                galleryPreview.style.display = 'grid';
+            }
+        }
+    </script>
+</body>
+</html>

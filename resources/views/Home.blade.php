@@ -551,43 +551,25 @@
                 <button data-filter="renovation">Renovation</button>
             </div>
             <div class="projects-grid">
-                <div class="project-card active" data-category="residential" data-href="project_moksha_hotel_page.html">
-                    <div class="project-image" style="background-image: url('assets/img/amila_ruwan-liyanapathirana-wood-locally-bricks-hotel-moksha-nature-sri-lanka-designboom-03-1-b5a51208.jpg');"></div>
-                    <div class="project-content">
-                        <h3>Moksha Hotel</h3>
-                        <p><strong>Location:</strong> Ambalangoda | <strong>Year:</strong> 2023</p>
-                        <p><strong>Type:</strong> Eco-Friendly Resort</p>
-                        <p>A luxurious retreat blending local wood and brick with sustainable design, featuring open-air spaces and natural ventilation systems to harmonize with the coastal environment.</p>
+                @if(isset($projects) && $projects->count() > 0)
+                    @foreach($projects as $project)
+                    <div class="project-card active" data-category="{{ $project->category }}" onclick="window.location.href='{{ route('projects.show', $project->slug) }}'" style="cursor: pointer;">
+                        <div class="project-image" style="background-image: url('{{ $project->main_image ? asset('storage/' . $project->main_image) : asset('assets/img/default-project.jpg') }}');"></div>
+                        <div class="project-content">
+                            <h3>{{ $project->title }}</h3>
+                            <p><strong>Location:</strong> {{ $project->location }} | <strong>Year:</strong> {{ $project->year }}</p>
+                            <p><strong>Type:</strong> {{ $project->type }}</p>
+                            <p>{{ Str::limit($project->description, 150) }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="project-card active" data-category="commercial">
-                    <div class="project-image" style="background-image: url('assets/img/seamless-regeneration-in-the-jungle-5-633956dc14e9a-5316f9fa.jpg');"></div>
-                    <div class="project-content">
-                        <h3>Jungle Office Complex</h3>
-                        <p><strong>Location:</strong> Galle | <strong>Year:</strong> 2022</p>
-                        <p><strong>Type:</strong> Sustainable Office</p>
-                        <p>A modern office complex with green roofs and rainwater harvesting, designed to minimize environmental impact while providing a productive workspace with natural light integration.</p>
-                    </div>
-                </div>
-                <div class="project-card active" data-category="residential">
-                    <div class="project-image" style="background-image: url('assets/img/palinda-kannagara-linear-house-at-battaramulla-sri-lanka-designboom-mobile-55e43d88.jpg');"></div>
-                    <div class="project-content">
-                        <h3>Linear House</h3>
-                        <p><strong>Location:</strong> Battaramulla | <strong>Year:</strong> 2021</p>
-                        <p><strong>Type:</strong> Minimalist Villa</p>
-                        <p>A sleek, linear layout with large glass windows and an open courtyard, emphasizing minimalism and indoor-outdoor living with eco-friendly materials.</p>
-                    </div>
-                </div>
-                <div class="project-card active" data-category="renovation">
-                    <div class="project-image" style="background-image: url('assets/img/sri-lanka-60e70f72.jpg');"></div>
-                    <div class="project-content">
-                        <h3>Renovated Villa</h3>
-                        <p><strong>Location:</strong> Matara | <strong>Year:</strong> 2024</p>
-                        <p><strong>Type:</strong> Heritage Restoration</p>
-                        <p>A restored colonial villa with modern upgrades, preserving original architectural elements while adding contemporary interiors and energy-efficient systems.</p>
-                    </div>
-                </div>
+                    @endforeach
+                @endif
             </div>
+            @if(isset($projects) && $projects->count() > 0)
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="{{ route('projects.index') }}" class="cta-button">View All Projects</a>
+            </div>
+            @endif
         </div>
     </section>
 
@@ -676,38 +658,26 @@
     <section id="blog" class="dark">
         <div class="section-container">
             <h2>LATEST <span>ARTICLES</span></h2>
+            @if(isset($latestBlogs) && $latestBlogs->count() > 0)
             <div class="blog-grid">
-                <div class="blog-card">
-                    <div class="blog-image" style="background-image: url('assets/img/amila_ruwan-liyanapathirana-wood-locally-bricks-hotel-moksha-nature-sri-lanka-designboom-03-1-b5a51208.jpg');"></div>
+                @foreach($latestBlogs as $blog)
+                <div class="blog-card" onclick="window.location.href='{{ route('blogs.show', $blog->slug) }}'" style="cursor: pointer;">
+                    <div class="blog-image" style="background-image: url('{{ $blog->featured_image ? asset('storage/' . $blog->featured_image) : asset('assets/img/default-blog.jpg') }}');"></div>
                     <div class="blog-content">
-                        <div class="blog-category">Sustainability</div>
-                        <h3>Sustainable Design Trends 2025</h3>
-                        <div class="blog-date">Published: October 15, 2025</div>
-                        <p class="blog-excerpt">Explore the latest trends in sustainable architecture shaping the future of eco-friendly construction.</p>
-                        <a href="blog_sustainable_design.html" class="blog-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        <div class="blog-category">{{ $blog->category }}</div>
+                        <h3>{{ $blog->title }}</h3>
+                        <div class="blog-date">Published: {{ $blog->published_date->format('F d, Y') }}</div>
+                        <p class="blog-excerpt">{{ Str::limit($blog->excerpt, 120) }}</p>
                     </div>
                 </div>
-                <div class="blog-card">
-                    <div class="blog-image" style="background-image: url('assets/img/seamless-regeneration-in-the-jungle-5-633956dc14e9a-5316f9fa.jpg');"></div>
-                    <div class="blog-content">
-                        <div class="blog-category">Commercial</div>
-                        <h3>Designing Modern Office Spaces</h3>
-                        <div class="blog-date">Published: October 10, 2025</div>
-                        <p class="blog-excerpt">Insights into creating efficient and inspiring commercial workspaces with a focus on employee well-being.</p>
-                        <a href="blog_office_spaces.html" class="blog-link">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="blog-card">
-                    <div class="blog-image" style="background-image: url('assets/img/palinda-kannagara-linear-house-at-battaramulla-sri-lanka-designboom-mobile-55e43d88.jpg');"></div>
-                    <div class="blog-content">
-                        <div class="blog-category">Residential</div>
-                        <h3>The Rise of Minimalist Living</h3>
-                        <div class="blog-date">Published: October 5, 2025</div>
-                        <p class="blog-excerpt">Discover how minimalist design principles are transforming residential architecture in Sri Lanka.</p>
-                        <a href="blog_minimalist_living.html" class="blog-link">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
+                @endforeach
             </div>
+            @if($latestBlogs->count() >= 3)
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="{{ route('blogs.index') }}" class="cta-button">View All Articles</a>
+            </div>
+            @endif
+            @endif
         </div>
     </section>
 
