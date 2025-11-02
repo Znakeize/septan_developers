@@ -103,8 +103,8 @@
                 </div>
 
                 <form action="{{ route('admin.projects.update', $project) }}" method="POST" enctype="multipart/form-data" id="project-form">
-                    @csrf
-                    @method('PUT')
+    @csrf
+    @method('PUT')
 
                     <div class="form-row">
                         <div class="form-group input-group">
@@ -238,8 +238,8 @@
                         </button>
                         <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
-                </form>
-            </div>
+  </form>
+</div>
         </main>
     </div>
 

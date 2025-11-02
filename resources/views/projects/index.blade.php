@@ -111,7 +111,7 @@
                 <li><a href="{{ route('home') }}#about">About</a></li>
                 <li class="dropdown">
                     <a href="{{ route('home') }}#services">Services</a>
-                    <ul>
+  <ul>
                         <li><a href="{{ route('services.architectural_design') }}">Architectural Design</a></li>
                         <li><a href="{{ route('services.structural_design') }}">Structural Design</a></li>
                         <li><a href="{{ route('services.bim') }}">Building Information Modeling (BIM)</a></li>
@@ -124,8 +124,8 @@
                 <li><a href="{{ route('projects.index') }}">Projects</a></li>
                 <li><a href="{{ route('blogs.index') }}">Blog</a></li>
                 <li><a href="{{ route('home') }}#contact">Contact</a></li>
-            </ul>
-        </div>
+  </ul>
+</div>
     </nav>
 
     <section class="projects-page-header">

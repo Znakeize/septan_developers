@@ -133,20 +133,20 @@
                 <span class="logo">SEPTAN</span>
             </a>
             <div class="auth-header">
-                <h1>Login</h1>
+  <h1>Login</h1>
                 <p>Access your admin dashboard</p>
             </div>
 
-            <form method="POST" action="{{ route('login.store') }}">
-                @csrf
+  <form method="POST" action="{{ route('login.store') }}">
+    @csrf
 
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus placeholder="Enter your email">
-                    @error('email')
+  @error('email')
                         <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
+  @enderror
+</div>
 
                 <div class="form-group">
                     <label for="password">Password</label>

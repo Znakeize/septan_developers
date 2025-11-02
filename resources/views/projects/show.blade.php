@@ -545,7 +545,7 @@
     <div class="lightbox" id="lightbox" onclick="closeLightbox()" style="display: none; position: fixed; z-index: 9999; inset: 0; background: rgba(0,0,0,0.95); align-items: center; justify-content: center;">
         <span class="lightbox-close" style="position: absolute; top: 20px; right: 40px; color: #fff; font-size: 40px; cursor: pointer;">&times;</span>
         <img src="" alt="Lightbox image" id="lightbox-img" style="max-width: 90%; max-height: 90%;">
-    </div>
+</div>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script>

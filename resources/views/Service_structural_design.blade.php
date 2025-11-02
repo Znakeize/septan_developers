@@ -36,7 +36,7 @@
         </div>
     </nav>
 
-    <section class="service-hero">
+    <section class="service-hero" @if(isset($heroImages) && count($heroImages) > 0) style="background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(0, 0, 0, 0.9)), url('{{ $heroImages[0] }}'); background-size: cover; background-position: center; background-attachment: fixed;" @endif>
         <div class="service-hero-content">
             <h1>STRUCTURAL <span>DESIGN</span></h1>
             <p>Engineering robust and safe structural systems that ensure the longevity and integrity of your building. Our expert structural engineers deliver solutions that combine safety, efficiency, and innovation.</p>

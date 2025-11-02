@@ -98,7 +98,7 @@
                 </div>
 
                 <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data" id="project-form">
-                    @csrf
+    @csrf
 
                     <div class="form-row">
                         <div class="form-group input-group">
@@ -218,8 +218,8 @@
                         </button>
                         <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
-                </form>
-            </div>
+  </form>
+</div>
         </main>
     </div>
 

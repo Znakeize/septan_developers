@@ -158,8 +158,8 @@
                 <li><a href="{{ route('projects.index') }}">Projects</a></li>
                 <li><a href="{{ route('blogs.index') }}">Blog</a></li>
                 <li><a href="{{ route('home') }}#contact">Contact</a></li>
-            </ul>
-        </div>
+  </ul>
+</div>
     </nav>
 
     <section class="blogs-page-header">

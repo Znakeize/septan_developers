@@ -125,6 +125,74 @@
         .blog-content li strong {
             color: #dc2626;
         }
+        
+        /* Blog content wrapper styles for rendered HTML */
+        .blog-content-wrapper {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #ccc;
+        }
+        .blog-content-wrapper p {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #ccc;
+        }
+        .blog-content-wrapper ul,
+        .blog-content-wrapper ol {
+            margin: 30px 0;
+            padding-left: 40px;
+        }
+        .blog-content-wrapper ul li,
+        .blog-content-wrapper ol li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+        .blog-content-wrapper ul li::marker,
+        .blog-content-wrapper ol li::marker {
+            color: inherit;
+        }
+        .blog-content-wrapper h1,
+        .blog-content-wrapper h2,
+        .blog-content-wrapper h3,
+        .blog-content-wrapper h4 {
+            margin: 40px 0 20px;
+            color: #dc2626;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .blog-content-wrapper h1 {
+            font-size: 2.5rem;
+        }
+        .blog-content-wrapper h2 {
+            font-size: 2rem;
+        }
+        .blog-content-wrapper h3 {
+            font-size: 1.75rem;
+        }
+        .blog-content-wrapper h4 {
+            font-size: 1.5rem;
+        }
+        .blog-content-wrapper a {
+            color: #dc2626;
+            text-decoration: underline;
+        }
+        .blog-content-wrapper a:hover {
+            color: #fff;
+        }
+        .blog-content-wrapper blockquote {
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 5px solid #dc2626;
+            padding: 40px;
+            margin: 50px 0;
+            font-style: italic;
+        }
+        .blog-content-wrapper blockquote p {
+            font-size: 1.4rem;
+            color: #fff;
+        }
         .quote-box {
             background: rgba(220, 38, 38, 0.05);
             border-left: 5px solid #dc2626;
@@ -459,7 +527,7 @@
     <section class="blog-hero" style="background-image: url('{{ $blog->featured_image ? asset('storage/' . $blog->featured_image) : asset('assets/img/default-blog.jpg') }}');">
         <div class="blog-hero-content">
             <div class="blog-category">{{ $blog->category }}</div>
-            <h1>{{ $blog->title }}</h1>
+  <h1>{{ $blog->title }}</h1>
             <div class="blog-meta">
                 <span><i class="fas fa-calendar"></i> {{ $blog->published_date->format('F d, Y') }}</span>
                 <span><i class="fas fa-user"></i> {{ $blog->user->name ?? 'Admin' }}</span>
@@ -475,8 +543,8 @@
 
             <p style="font-size: 1.4rem; color: #999; font-style: italic; margin-bottom: 40px;">{{ $blog->excerpt }}</p>
 
-            <div>
-                {!! nl2br(e($blog->content)) !!}
+            <div class="blog-content-wrapper">
+                {!! $blog->content !!}
             </div>
 
             @if($blog->tags && count($blog->tags) > 0)
@@ -574,7 +642,7 @@
                 <a href="#">Privacy</a>
             </div>
             <div class="copyright">&copy; 2025 Septan Developers. All rights reserved.</div>
-        </div>
+</div>
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>

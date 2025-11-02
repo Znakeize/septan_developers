@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f5f5f5; }
@@ -38,7 +40,45 @@
         }
         .input-group input:focus, .input-group textarea:focus, .input-group select:focus { outline: none; border-color: #ff4b33; }
         .input-group textarea { min-height: 150px; resize: vertical; }
-        textarea#content { min-height: 400px; }
+        textarea#content { display: none; }
+        
+        /* Quill Editor Styles */
+        #editor-container { 
+            min-height: 400px; 
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 5px;
+        }
+        .ql-editor {
+            min-height: 400px;
+            font-size: 16px;
+            line-height: 1.6;
+            font-family: Arial, sans-serif;
+        }
+        .ql-toolbar {
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            border-bottom: 1px solid #ddd;
+            background: #f8f9fa;
+        }
+        .ql-container {
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+        
+        /* Custom styles for bullet point colors */
+        .ql-editor ul li::marker,
+        .ql-editor ol li::marker {
+            color: inherit;
+        }
+        .ql-editor ul[style*="color"] li,
+        .ql-editor ol[style*="color"] li {
+            color: inherit;
+        }
+        .ql-editor li[style*="color"] {
+            color: inherit;
+        }
         
         .drop-zone {
             position: relative; width: 100%; min-height: 140px; background: #f9f9f9; border: 2px dashed #ddd;
@@ -102,7 +142,7 @@
                 </div>
 
                 <form action="{{ route('admin.blogs.store') }}" method="POST" enctype="multipart/form-data" id="blog-form">
-                    @csrf
+    @csrf
 
                     <div class="form-group input-group">
                         <i class="fas fa-heading"></i>
@@ -154,10 +194,11 @@
                         @error('featured_image')<div class="error">{{ $message }}</div>@enderror
                     </div>
 
-                    <div class="form-group input-group full-width">
-                        <i class="fas fa-paragraph"></i>
-                        <textarea id="content" name="content" required placeholder="Extracted or manually entered content...">{{ old('content') }}</textarea>
-                        <div class="help-text">Write your full article here. You can use basic HTML formatting.</div>
+                    <div class="form-group full-width">
+                        <label style="margin-bottom: 10px; display: block; font-weight: 500; color: #333;">Article Content *</label>
+                        <div id="editor-container"></div>
+                        <textarea id="content" name="content" required style="display: none;">{{ old('content') }}</textarea>
+                        <div class="help-text">Use the toolbar above to format your text, change colors, add bullet points, and adjust alignment.</div>
                         @error('content')<div class="error">{{ $message }}</div>@enderror
                     </div>
 
@@ -181,8 +222,8 @@
                         </button>
                         <a href="{{ route('admin.blogs.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
-                </form>
-            </div>
+  </form>
+</div>
         </main>
     </div>
 
@@ -260,8 +301,45 @@
             }
         }
 
+        // Initialize Quill Editor
+        var quill = new Quill('#editor-container', {
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    [{ 'size': ['8px', '10px', '12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px', '36px', '48px'] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'align': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],
+                    ['link'],
+                    ['clean']
+                ]
+            },
+            theme: 'snow',
+            placeholder: 'Write your full article here...'
+        });
+
+        // Load existing content if any
+        @if(old('content'))
+        quill.root.innerHTML = {!! json_encode(old('content')) !!};
+        @endif
+
+        // Update textarea on content change
+        quill.on('text-change', function() {
+            contentArea.value = quill.root.innerHTML;
+        });
+
+        // Also update before form submit
+        document.getElementById('blog-form').addEventListener('submit', function(e) {
+            contentArea.value = quill.root.innerHTML;
+        });
+
         function fillContent(text) {
-            contentArea.value = text.trim();
+            // Convert plain text to HTML for Quill
+            var html = '<p>' + text.trim().replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') + '</p>';
+            quill.root.innerHTML = html;
+            contentArea.value = quill.root.innerHTML;
             document.getElementById('tags').value = extractTags(text);
         }
 

@@ -42,11 +42,18 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-slides">
-            <div class="hero-slide active" style="background-image: url('assets/img/amila_ruwan-liyanapathirana-wood-locally-bricks-hotel-moksha-nature-sri-lanka-designboom-03-1-b5a51208.jpg');"></div>
-            <div class="hero-slide" style="background-image: url('assets/img/seamless-regeneration-in-the-jungle-5-633956dc14e9a-5316f9fa.jpg');"></div>
-            <div class="hero-slide" style="background-image: url('assets/img/palinda-kannagara-linear-house-at-battaramulla-sri-lanka-designboom-mobile-55e43d88.jpg');"></div>
-            <div class="hero-slide" style="background-image: url('assets/img/sri-lanka-60e70f72.jpg');"></div>
-            <div class="hero-slide" style="background-image: url('assets/img/Eco-Friendly-House-Designs-in-Sri-Lanka-4-d631f37c.jpg');"></div>
+            @if(isset($heroImages) && count($heroImages) > 0)
+                @foreach($heroImages as $index => $image)
+                <div class="hero-slide {{ $index === 0 ? 'active' : '' }}" style="background-image: url('{{ $image }}');"></div>
+                @endforeach
+            @else
+                {{-- Fallback images --}}
+                <div class="hero-slide active" style="background-image: url('assets/img/amila_ruwan-liyanapathirana-wood-locally-bricks-hotel-moksha-nature-sri-lanka-designboom-03-1-b5a51208.jpg');"></div>
+                <div class="hero-slide" style="background-image: url('assets/img/seamless-regeneration-in-the-jungle-5-633956dc14e9a-5316f9fa.jpg');"></div>
+                <div class="hero-slide" style="background-image: url('assets/img/palinda-kannagara-linear-house-at-battaramulla-sri-lanka-designboom-mobile-55e43d88.jpg');"></div>
+                <div class="hero-slide" style="background-image: url('assets/img/sri-lanka-60e70f72.jpg');"></div>
+                <div class="hero-slide" style="background-image: url('assets/img/Eco-Friendly-House-Designs-in-Sri-Lanka-4-d631f37c.jpg');"></div>
+            @endif
         </div>
         <div class="scroll-text top">ARCHITECTURAL DESIGN • STRUCTURAL ENGINEERING • BUILDING INFORMATION MODELING (BIM) • INTERIOR DESIGN • 3D VISUALIZATION • PROJECT MANAGEMENT</div>
         <div class="hero-content">
