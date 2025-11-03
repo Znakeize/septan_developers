@@ -35,6 +35,13 @@
     </nav>
 
     <section class="service-hero" @if(isset($heroImages) && count($heroImages) > 0) style="background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(0, 0, 0, 0.9)), url('{{ $heroImages[0] }}'); background-size: cover; background-position: center; background-attachment: fixed;" @endif>
+        @if(isset($heroImages) && count($heroImages) > 0)
+        <div class="hero-slides">
+            @foreach($heroImages as $index => $image)
+            <div class="hero-slide {{ $index === 0 ? 'active' : '' }}" style="background-image: url('{{ $image }}');"></div>
+            @endforeach
+        </div>
+        @endif
         <div class="service-hero-content">
             <h1>BUILDING INFORMATION <span>MODELING</span></h1>
             <p>Revolutionizing construction through intelligent 3D modeling and seamless project coordination. Our BIM services integrate all building systems for optimal efficiency and collaboration.</p>

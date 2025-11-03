@@ -35,6 +35,13 @@
     </nav>
 
     <section class="service-hero" @if(isset($heroImages) && count($heroImages) > 0) style="background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(0, 0, 0, 0.9)), url('{{ $heroImages[0] }}'); background-size: cover; background-position: center; background-attachment: fixed;" @endif>
+        @if(isset($heroImages) && count($heroImages) > 0)
+        <div class="hero-slides">
+            @foreach($heroImages as $index => $image)
+            <div class="hero-slide {{ $index === 0 ? 'active' : '' }}" style="background-image: url('{{ $image }}');"></div>
+            @endforeach
+        </div>
+        @endif
         <div class="service-hero-content">
             <h1>PROJECT <span>MANAGEMENT</span></h1>
             <p>Ensuring seamless project execution from planning through completion with expert oversight. We deliver projects on time, within budget, and to the highest quality standards.</p>

@@ -47,33 +47,43 @@ class SettingsController extends Controller
             'project-management' => 'project_management_images',
         ];
 
+        $maxPerSection = 10;
         foreach ($pageTypes as $pageType => $fieldName) {
+            // Get existing record and images
+            $existing = DB::table('hero_images')->where('page_type', $pageType)->first();
+            $existingImages = [];
+            if ($existing && $existing->images) {
+                $existingImages = array_values(array_filter((array) json_decode($existing->images, true)));
+            }
+
             if ($request->hasFile($fieldName)) {
-                $images = [];
-                foreach ($request->file($fieldName) as $file) {
-                    $path = $file->store('hero_images', 'public');
-                    $images[] = $path;
+                $newFiles = $request->file($fieldName);
+
+                // Enforce overall cap (existing + new <= $maxPerSection)
+                $availableSlots = max(0, $maxPerSection - count($existingImages));
+                if (count($newFiles) > $availableSlots) {
+                    return back()
+                        ->withErrors([ $fieldName => "You can upload up to {$maxPerSection} images for this section. Remove some images first." ])
+                        ->withInput();
                 }
-                
-                $existing = DB::table('hero_images')->where('page_type', $pageType)->first();
+
+                // Store new files
+                $stored = [];
+                foreach ($newFiles as $file) {
+                    $stored[] = $file->store('hero_images', 'public');
+                }
+
+                $merged = array_values(array_merge($existingImages, $stored));
+
                 if ($existing) {
-                    // Delete old images
-                    if ($existing->images) {
-                        $oldImages = json_decode($existing->images, true);
-                        foreach ($oldImages as $oldImage) {
-                            Storage::disk('public')->delete($oldImage);
-                        }
-                    }
-                    // Update existing
                     DB::table('hero_images')->where('page_type', $pageType)->update([
-                        'images' => json_encode($images),
+                        'images' => json_encode($merged),
                         'updated_at' => now(),
                     ]);
                 } else {
-                    // Create new
                     DB::table('hero_images')->insert([
                         'page_type' => $pageType,
-                        'images' => json_encode($images),
+                        'images' => json_encode($merged),
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
