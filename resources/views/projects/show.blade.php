@@ -159,6 +159,7 @@
         }
         .gallery-hero .cta-card h3 {
             font-size: 1.4rem;
+            color:rgb(255, 255, 255);
             margin-bottom: 0.75rem;
         }
         .gallery-hero .cta-card p {
@@ -379,7 +380,10 @@
 <body>
     <nav>
         <div class="nav-container">
-            <div class="logo"><a href="{{ route('home') }}">SEPTAN</a></div>
+            <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
+                <img src="{{ asset('assets/img/logo-sample.svg') }}" alt="Septan" style="height:32px;display:block;"/>
+                <span style="font-weight:900;letter-spacing:2px;color:#dc2626;">SEPTAN</span>
+            </a></div>
             <button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
             <ul id="nav-menu">
                 <li><a href="{{ route('home') }}#about">About</a></li>
@@ -438,6 +442,31 @@
             </div>
         </div>
     </section>
+
+    @if(is_array($project->features) && count(array_filter($project->features)) > 0)
+    <section style="background:#000; padding:80px 20px;">
+        <div class="section-container">
+            <h2>PROJECT <span>FEATURES</span></h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;">
+                @foreach($project->features as $feature)
+                    @if(!empty($feature['title']) || !empty($feature['description']))
+                    <div style="background:#070707;border:1px solid #2a2a2a;padding:28px;min-height:220px;">
+                        <div style="color:#dc2626;font-size:28px;margin-bottom:10px;">
+                            @if(!empty($feature['icon']))
+                                <i class="fas fa-{{ $feature['icon'] }}"></i>
+                            @else
+                                <i class="fas fa-seedling"></i>
+                            @endif
+                        </div>
+                        <div style="font-weight:800;letter-spacing:1px;color:#dc2626;margin-bottom:10px;font-size:20px;">{{ strtoupper($feature['title'] ?? '') }}</div>
+                        <div style="color:#cfcfcf;line-height:1.8;">{{ $feature['description'] ?? '' }}</div>
+                    </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
 
     @if(($project->video_url || ($project->gallery_images && count($project->gallery_images) > 0)))
     <section class="project-gallery">
@@ -537,6 +566,8 @@
                 <a href="https://facebook.com/SeptanDevelopers" target="_blank"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://instagram.com/septan_developers" target="_blank"><i class="fab fa-instagram"></i></a>
                 <a href="https://linkedin.com/company/septan-developers-pvt-ltd" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://tiktok.com/@septandevelopers" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://youtube.com/@SeptanDevelopers" target="_blank"><i class="fab fa-youtube"></i></a>
             </div>
             <div class="copyright">&copy; 2025 Septan Developers. All rights reserved.</div>
         </div>

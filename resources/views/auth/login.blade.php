@@ -130,7 +130,7 @@
     <div class="auth-container">
         <div class="auth-box">
             <a href="{{ route('home') }}" class="logo-link">
-                <span class="logo">SEPTAN</span>
+                <img src="{{ asset('assets/img/logo-sample.svg') }}" alt="Septan" style="height:36px;display:inline-block;"/>
             </a>
             <div class="auth-header">
   <h1>Login</h1>

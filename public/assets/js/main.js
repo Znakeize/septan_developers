@@ -153,17 +153,31 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Start a scoped slider for each slides container
+    // Start a scoped slider for each slides container and wire prev/next controls
     var allSlidesContainers = document.querySelectorAll('.hero-slides');
     allSlidesContainers.forEach(function(wrap){
       var slides = wrap.querySelectorAll('.hero-slide');
       if (!slides || !slides.length) return;
       var idx = 0;
-      setInterval(function(){
+      var timer = setInterval(next, 4000);
+
+      function show(i){
         slides[idx].classList.remove('active');
-        idx = (idx + 1) % slides.length;
+        idx = (i + slides.length) % slides.length;
         slides[idx].classList.add('active');
-      }, 4000);
+      }
+      function next(){ show(idx + 1); }
+      function prev(){ show(idx - 1); }
+
+      var parentHero = wrap.closest('.service-hero, .hero, .blog-hero, .project-hero');
+      if (parentHero){
+        var prevBtn = parentHero.querySelector('.hero-nav .prev');
+        var nextBtn = parentHero.querySelector('.hero-nav .next');
+        if (prevBtn && nextBtn){
+          prevBtn.addEventListener('click', function(){ clearInterval(timer); prev(); });
+          nextBtn.addEventListener('click', function(){ clearInterval(timer); next(); });
+        }
+      }
     });
   })();
 

@@ -13,7 +13,7 @@ class Project extends Model
 
     protected $fillable = [
         'title', 'slug', 'description', 'location', 'year', 'type', 'category',
-        'main_image', 'gallery_images', 'video_url', 'client_name', 'project_area',
+        'main_image', 'gallery_images', 'video_url', 'features', 'client_name', 'project_area',
         'start_date', 'completion_date', 'is_published', 'is_featured'
     ];
 
@@ -24,6 +24,7 @@ class Project extends Model
         'is_published' => 'boolean',
         'is_featured' => 'boolean',
         'project_area' => 'decimal:2',
+        'features' => 'array',
     ];
 
     protected static function boot()

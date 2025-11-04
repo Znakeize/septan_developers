@@ -9,9 +9,14 @@ class ProjectController extends Controller
 {
     public function index()
     {
+        // Prefer published projects; if none exist yet, show all so the page isn't empty
         $projects = Project::where('is_published', true)
             ->latest()
             ->paginate(12);
+
+        if ($projects->isEmpty()) {
+            $projects = Project::latest()->paginate(12);
+        }
         return view('projects.index', compact('projects'));
     }
 

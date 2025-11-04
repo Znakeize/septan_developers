@@ -9,8 +9,10 @@
 </head>
 <body data-page="project-management">
     <nav>
-        <div class="nav-container">
-            <div class="logo"><a href="{{ route('home') }}">SEPTAN</a></div>
+        <div class="nav-container">     
+            <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
+                <img src="{{ asset('assets/img/logo-sample.svg') }}" alt="Septan" style="height:32px;display:block;"/>
+                <span style="font-weight:900;letter-spacing:2px;color:#dc2626;">SEPTAN</span></div>
             <button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
             <ul id="nav-menu">
                 <li><a href="{{ route('home') }}#about">About</a></li>
@@ -40,6 +42,10 @@
             @foreach($heroImages as $index => $image)
             <div class="hero-slide {{ $index === 0 ? 'active' : '' }}" style="background-image: url('{{ $image }}');"></div>
             @endforeach
+        </div>
+        <div class="hero-nav">
+            <button type="button" class="prev"><i class="fas fa-chevron-left"></i></button>
+            <button type="button" class="next"><i class="fas fa-chevron-right"></i></button>
         </div>
         @endif
         <div class="service-hero-content">

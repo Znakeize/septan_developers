@@ -13,7 +13,10 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <div class="logo">SEPTAN</div>
+            <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
+                <img src="{{ asset('assets/img/logo-sample.svg') }}" alt="Septan" style="height:32px;display:block;"/>
+                <span style="font-weight:900;letter-spacing:2px;color:#dc2626;">SEPTAN</span>
+            </a></div>
             <button class="menu-toggle" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
             </button>
@@ -24,7 +27,7 @@
                     <ul>
                         <li><a href="{{route('services.architectural_design')}}">Architectural Design</a></li>
                         <li><a href="{{route('services.structural_design')}}">Structural Design</a></li>
-			            <li><a href="{{route('services.bim')}}">Building Information Modeling (BIM)</a></li>
+			                  <li><a href="{{route('services.bim')}}">Building Information Modeling (BIM)</a></li>
                         <li><a href="{{route('services.interior_design')}}">Interior Design</a></li>
                         <li><a href="{{route('services.3d_rendering')}}">3D Rendering</a></li>
                         <li><a href="{{route('services.estimation')}}">Estimation & Consultation</a></li>

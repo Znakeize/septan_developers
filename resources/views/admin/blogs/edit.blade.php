@@ -114,7 +114,9 @@
     <div class="admin-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>SEPTAN ADMIN</h2>
+                <a href="{{ route('admin.dashboard') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:6px 0;">
+                    <img src="{{ asset('assets/img/logo-sample.svg') }}" alt="Septan" style="height:32px;display:block;"/>
+                </a>
             </div>
             <nav class="sidebar-menu">
                 <a href="{{ route('admin.dashboard') }}" class="menu-item">

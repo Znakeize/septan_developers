@@ -28,12 +28,17 @@ class ProjectController extends Controller
             'location' => 'required|string|max:255',
             'year' => 'required|string|max:50',
             'type' => 'required|string|max:255',
+            'type_custom' => 'nullable|string|max:255',
             'category' => 'required|in:residential,commercial,renovation',
             'description' => 'required|string',
             'main_image' => 'required|image|max:5120',
             'gallery_images' => 'nullable|array',
             'gallery_images.*' => 'image|max:5120',
             'video_url' => 'nullable|url',
+            'features' => 'nullable|array',
+            'features.*.title' => 'nullable|string|max:100',
+            'features.*.description' => 'nullable|string|max:500',
+            'features.*.icon' => 'nullable|string|max:50',
             'client_name' => 'nullable|string|max:255',
             'project_area' => 'nullable|numeric|min:0',
             'start_date' => 'nullable|date',
@@ -52,6 +57,12 @@ class ProjectController extends Controller
             $data['slug'] = $originalSlug . '-' . $counter;
             $counter++;
         }
+
+        // Custom type overrides selected type if provided
+        if (!empty($data['type_custom'])) {
+            $data['type'] = $data['type_custom'];
+        }
+        unset($data['type_custom']);
 
         // Handle main image upload
         if ($request->hasFile('main_image')) {
@@ -89,12 +100,17 @@ class ProjectController extends Controller
             'location' => 'required|string|max:255',
             'year' => 'required|string|max:50',
             'type' => 'required|string|max:255',
+            'type_custom' => 'nullable|string|max:255',
             'category' => 'required|in:residential,commercial,renovation',
             'description' => 'required|string',
             'main_image' => 'nullable|image|max:5120',
             'gallery_images' => 'nullable|array',
             'gallery_images.*' => 'image|max:5120',
             'video_url' => 'nullable|url',
+            'features' => 'nullable|array',
+            'features.*.title' => 'nullable|string|max:100',
+            'features.*.description' => 'nullable|string|max:500',
+            'features.*.icon' => 'nullable|string|max:50',
             'client_name' => 'nullable|string|max:255',
             'project_area' => 'nullable|numeric|min:0',
             'start_date' => 'nullable|date',
@@ -102,6 +118,11 @@ class ProjectController extends Controller
             'is_published' => 'boolean',
             'is_featured' => 'boolean',
         ]);
+
+        if (!empty($data['type_custom'])) {
+            $data['type'] = $data['type_custom'];
+        }
+        unset($data['type_custom']);
 
         // Update slug if title changed
         if ($project->title !== $data['title']) {

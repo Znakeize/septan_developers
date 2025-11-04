@@ -105,7 +105,10 @@
 <body>
     <nav>
         <div class="nav-container">
-            <div class="logo"><a href="{{ route('home') }}">SEPTAN</a></div>
+            <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
+                <img src="{{ asset('assets/img/logo-sample.svg') }}" alt="Septan" style="height:32px;display:block;"/>
+                <span style="font-weight:900;letter-spacing:2px;color:#dc2626;">SEPTAN</span>
+            </a></div>
             <button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
             <ul id="nav-menu">
                 <li><a href="{{ route('home') }}#about">About</a></li>
@@ -143,15 +146,12 @@
                 <div class="project-image" style="background-image: url('{{ $project->main_image ? asset('storage/' . $project->main_image) : asset('assets/img/default-project.jpg') }}');"></div>
                 <div class="project-content">
                     <h3>{{ $project->title }}</h3>
-                    <p><strong>Location:</strong> {{ $project->location }} | <strong>Year:</strong> {{ $project->year }}</p>
-                    <p><strong>Type:</strong> {{ $project->type }}</p>
-                    <p><strong>Category:</strong> {{ ucfirst($project->category) }}</p>
-                    <p style="margin-top: 15px; line-height: 1.6;">{{ Str::limit($project->description, 150) }}</p>
+                    <p>{{ $project->location }} • {{ $project->year }}</p>
+                    <p style="color:#dc2626;text-transform:uppercase;font-weight:700;">{{ $project->type }}</p>
                 </div>
             </div>
             @endforeach
         </div>
-
         <div class="pagination">
             {{ $projects->links() }}
         </div>
@@ -169,6 +169,8 @@
                 <a href="https://facebook.com/SeptanDevelopers" target="_blank"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://instagram.com/septan_developers" target="_blank"><i class="fab fa-instagram"></i></a>
                 <a href="https://linkedin.com/company/septan-developers-pvt-ltd" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://tiktok.com/@septandevelopers" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://youtube.com/@SeptanDevelopers" target="_blank"><i class="fab fa-youtube"></i></a>
             </div>
             <div class="copyright">&copy; 2025 Septan Developers. All rights reserved.</div>
         </div>

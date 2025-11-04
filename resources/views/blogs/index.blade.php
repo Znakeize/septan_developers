@@ -139,7 +139,10 @@
 <body>
     <nav>
         <div class="nav-container">
-            <div class="logo"><a href="{{ route('home') }}">SEPTAN</a></div>
+            <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
+                <img src="{{ asset('assets/img/logo-sample.svg') }}" alt="Septan" style="height:32px;display:block;"/>
+                <span style="font-weight:900;letter-spacing:2px;color:#dc2626;">SEPTAN</span>
+            </a></div>
             <button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
             <ul id="nav-menu">
                 <li><a href="{{ route('home') }}#about">About</a></li>
@@ -207,6 +210,8 @@
                 <a href="https://facebook.com/SeptanDevelopers" target="_blank"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://instagram.com/septan_developers" target="_blank"><i class="fab fa-instagram"></i></a>
                 <a href="https://linkedin.com/company/septan-developers-pvt-ltd" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://tiktok.com/@septandevelopers" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://youtube.com/@SeptanDevelopers" target="_blank"><i class="fab fa-youtube"></i></a>
             </div>
             <div class="copyright">&copy; 2025 Septan Developers. All rights reserved.</div>
         </div>

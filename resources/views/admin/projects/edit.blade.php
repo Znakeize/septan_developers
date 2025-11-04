@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f5f5f5; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #000; color:#e5e5e5; }
         
         .admin-container { display: flex; min-height: 100vh; }
         .sidebar { width: 260px; background: #1a1a1a; color: #fff; padding: 20px 0; position: fixed; height: 100vh; overflow-y: auto; }
@@ -18,13 +18,13 @@
         .menu-item:hover, .menu-item.active { background: #ff4b33; color: #fff; }
         
         .main-content { flex: 1; margin-left: 260px; padding: 30px; }
-        .form-container { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 1000px; }
+        .form-container { background: #0f0f0f; padding: 30px; border-radius: 10px; border:1px solid #222; max-width: 1000px; }
         .form-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .form-header h1 { font-size: 28px; color: #1a1a1a; }
+        .form-header h1 { font-size: 28px; color: #dc2626; letter-spacing:1px; }
         .back-btn { color: #666; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
         
         .form-group { margin-bottom: 25px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #333; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #bbb; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
         .form-group textarea { min-height: 150px; resize: vertical; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -33,18 +33,18 @@
         .input-group { position: relative; }
         .input-group i { position: absolute; left: 12px; top: 14px; color: #999; font-size: 1.1rem; z-index: 1; }
         .input-group input, .input-group textarea, .input-group select {
-            width: 100%; padding: 12px 12px 12px 42px; border: 1px solid #ddd; border-radius: 6px;
-            color: #333; font-size: 14px; transition: border 0.3s ease;
+            width: 100%; padding: 12px 12px 12px 42px; border: 1px solid #222; border-radius: 6px; background:#0b0b0b;
+            color: #e5e5e5; font-size: 14px; transition: border 0.3s ease;
         }
-        .input-group input:focus, .input-group textarea:focus, .input-group select:focus { outline: none; border-color: #ff4b33; }
+        .input-group input:focus, .input-group textarea:focus, .input-group select:focus { outline: none; border-color: #dc2626; }
         
         .drop-zone {
-            position: relative; width: 100%; min-height: 140px; background: #f9f9f9; border: 2px dashed #ddd;
+            position: relative; width: 100%; min-height: 140px; background: #0b0b0b; border: 2px dashed #222;
             border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: #999; font-size: 0.95rem; transition: all 0.3s ease; cursor: pointer; padding: 20px;
+            color: #9ca3af; font-size: 0.95rem; transition: all 0.3s ease; cursor: pointer; padding: 20px;
         }
-        .drop-zone:hover, .drop-zone.dragover { border-color: #ff4b33; background: #fff5f5; color: #ff4b33; }
-        .drop-zone i { font-size: 2.5rem; margin-bottom: 10px; color: #999; }
+        .drop-zone:hover, .drop-zone.dragover { border-color: #dc2626; background: #0f0f0f; color: #dc2626; }
+        .drop-zone i { font-size: 2.5rem; margin-bottom: 10px; color: #6b7280; }
         .drop-zone.dragover i { color: #ff4b33; }
         .drop-zone input { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
         .file-list { margin-top: 10px; font-size: 0.85rem; color: #666; max-height: 80px; overflow-y: auto; width: 100%; }
@@ -62,20 +62,22 @@
         
         .btn-group { display: flex; gap: 15px; margin-top: 30px; }
         .btn { padding: 12px 24px; border-radius: 6px; font-weight: 500; border: none; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-primary { background: #ff4b33; color: #fff; }
-        .btn-primary:hover { background: #e63e28; }
-        .btn-secondary { background: #6b7280; color: #fff; }
-        .btn-secondary:hover { background: #4b5563; }
+        .btn-primary { background: #dc2626; color: #fff; }
+        .btn-primary:hover { background: #b91c1c; }
+        .btn-secondary { background: #374151; color: #fff; }
+        .btn-secondary:hover { background: #1f2937; }
         
         .error { color: #ef4444; font-size: 13px; margin-top: 5px; }
-        .help-text { font-size: 12px; color: #999; margin-top: 5px; }
+        .help-text { font-size: 12px; color: #9ca3af; margin-top: 5px; }
     </style>
 </head>
 <body>
     <div class="admin-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>SEPTAN ADMIN</h2>
+                <a href="{{ route('admin.dashboard') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:6px 0;">
+                    <img src="{{ asset('assets/img/logo-sample.svg') }}" alt="Septan" style="height:32px;display:block;"/>
+                </a>
             </div>
             <nav class="sidebar-menu">
                 <a href="{{ route('admin.dashboard') }}" class="menu-item">
@@ -123,6 +125,11 @@
                                 <option value="Green Hotel" {{ old('type', $project->type) == 'Green Hotel' ? 'selected' : '' }}>Green Hotel</option>
                             </select>
                         </div>
+                        <div class="form-group input-group">
+                            <i class="fas fa-i-cursor"></i>
+                            <input type="text" id="type_custom" name="type_custom" placeholder="Or enter custom type" value="{{ old('type_custom') }}">
+                            <div class="help-text">If filled, this will override the selected type.</div>
+                        </div>
                     </div>
 
                     <div class="form-row">
@@ -156,6 +163,30 @@
                     <div class="form-group input-group full-width">
                         <i class="fas fa-paragraph"></i>
                         <textarea id="description" name="description" placeholder="Project Description" required>{{ old('description', $project->description) }}</textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label style="display:block;margin-bottom:10px;font-weight:600;">Feature Cards (up to 6)</label>
+                        <div class="form-row">
+                            @for($i=0; $i<6; $i++)
+                            <?php $f = $project->features[$i] ?? null; ?>
+                            <div class="form-group" style="border:1px dashed #ddd;border-radius:8px;padding:12px;">
+                                <div class="form-group input-group">
+                                    <i class="fas fa-heading"></i>
+                                    <input type="text" name="features[{{$i}}][title]" placeholder="Feature title" value="{{ old('features.'.$i.'.title', $f['title'] ?? '') }}">
+                                </div>
+                                <div class="form-group input-group">
+                                    <i class="fas fa-align-left"></i>
+                                    <input type="text" name="features[{{$i}}][description]" placeholder="Feature description" value="{{ old('features.'.$i.'.description', $f['description'] ?? '') }}">
+                                </div>
+                                <div class="form-group input-group">
+                                    <i class="fas fa-icons"></i>
+                                    <input type="text" name="features[{{$i}}][icon]" placeholder="Font Awesome icon e.g. leaf, wind, solar-panel" value="{{ old('features.'.$i.'.icon', $f['icon'] ?? '') }}">
+                                </div>
+                            </div>
+                            @endfor
+                        </div>
+                        <div class="help-text">Leave any unused feature blocks empty.</div>
                     </div>
 
                     <div class="form-group full-width">

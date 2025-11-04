@@ -11,7 +11,7 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f5f5f5; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #000; color:#e5e5e5; }
         
         .admin-container { display: flex; min-height: 100vh; }
         .sidebar { width: 260px; background: #1a1a1a; color: #fff; padding: 20px 0; position: fixed; height: 100vh; }
@@ -22,31 +22,31 @@
         .menu-item:hover, .menu-item.active { background: #ff4b33; color: #fff; }
         
         .main-content { flex: 1; margin-left: 260px; padding: 30px; }
-        .form-container { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 1000px; }
+        .form-container { background: #0f0f0f; padding: 30px; border-radius: 10px; border:1px solid #222; max-width: 1000px; }
         .form-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .form-header h1 { font-size: 28px; color: #1a1a1a; }
+        .form-header h1 { font-size: 28px; color: #dc2626; letter-spacing:1px; }
         .back-btn { color: #666; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
         
         .form-group { margin-bottom: 25px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #333; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #bbb; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .full-width { grid-column: 1 / -1; }
         
         .input-group { position: relative; }
         .input-group i { position: absolute; left: 12px; top: 14px; color: #999; font-size: 1.1rem; z-index: 1; }
         .input-group input, .input-group textarea, .input-group select {
-            width: 100%; padding: 12px 12px 12px 42px; border: 1px solid #ddd; border-radius: 6px;
-            color: #333; font-size: 14px; transition: border 0.3s ease;
+            width: 100%; padding: 12px 12px 12px 42px; border: 1px solid #222; border-radius: 6px; background:#0b0b0b;
+            color: #e5e5e5; font-size: 14px; transition: border 0.3s ease;
         }
-        .input-group input:focus, .input-group textarea:focus, .input-group select:focus { outline: none; border-color: #ff4b33; }
+        .input-group input:focus, .input-group textarea:focus, .input-group select:focus { outline: none; border-color: #dc2626; }
         .input-group textarea { min-height: 150px; resize: vertical; }
         textarea#content { display: none; }
         
         /* Quill Editor Styles */
         #editor-container { 
             min-height: 400px; 
-            background: #fff;
-            border: 1px solid #ddd;
+            background: #0b0b0b;
+            border: 1px solid #222;
             border-radius: 6px;
             margin-bottom: 5px;
         }
@@ -59,8 +59,9 @@
         .ql-toolbar {
             border-top-left-radius: 6px;
             border-top-right-radius: 6px;
-            border-bottom: 1px solid #ddd;
-            background: #f8f9fa;
+            border-bottom: 1px solid #222;
+            background: #0b0b0b;
+            color:#e5e5e5;
         }
         .ql-container {
             border-bottom-left-radius: 6px;
@@ -81,12 +82,12 @@
         }
         
         .drop-zone {
-            position: relative; width: 100%; min-height: 140px; background: #f9f9f9; border: 2px dashed #ddd;
+            position: relative; width: 100%; min-height: 140px; background: #0b0b0b; border: 2px dashed #222;
             border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: #999; font-size: 0.95rem; transition: all 0.3s ease; cursor: pointer; padding: 20px;
+            color: #9ca3af; font-size: 0.95rem; transition: all 0.3s ease; cursor: pointer; padding: 20px;
         }
-        .drop-zone:hover, .drop-zone.dragover { border-color: #ff4b33; background: #fff5f5; color: #ff4b33; }
-        .drop-zone i { font-size: 2.5rem; margin-bottom: 10px; color: #999; }
+        .drop-zone:hover, .drop-zone.dragover { border-color: #dc2626; background: #0f0f0f; color: #dc2626; }
+        .drop-zone i { font-size: 2.5rem; margin-bottom: 10px; color: #6b7280; }
         .drop-zone.dragover i { color: #ff4b33; }
         .drop-zone input { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
         .file-name { margin-top: 10px; font-size: 0.9rem; color: #ff4b33; word-break: break-all; }
@@ -101,10 +102,10 @@
         
         .btn-group { display: flex; gap: 15px; margin-top: 30px; }
         .btn { padding: 12px 24px; border-radius: 6px; font-weight: 500; border: none; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-primary { background: #ff4b33; color: #fff; }
-        .btn-primary:hover { background: #e63e28; }
-        .btn-secondary { background: #6b7280; color: #fff; }
-        .btn-secondary:hover { background: #4b5563; }
+        .btn-primary { background: #dc2626; color: #fff; }
+        .btn-primary:hover { background: #b91c1c; }
+        .btn-secondary { background: #374151; color: #fff; }
+        .btn-secondary:hover { background: #1f2937; }
         
         .error { color: #ef4444; font-size: 13px; margin-top: 5px; }
         .extract-msg { padding: 12px; border-radius: 6px; text-align: center; margin-top: 15px; font-size: 0.9rem; display: none; background: #7c3aed; color: #fff; }
@@ -114,7 +115,9 @@
     <div class="admin-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>SEPTAN ADMIN</h2>
+                <a href="{{ route('admin.dashboard') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:6px 0;">
+                    <img src="{{ asset('assets/img/logo-sample.svg') }}" alt="Septan" style="height:32px;display:block;"/>
+                </a>
             </div>
             <nav class="sidebar-menu">
                 <a href="{{ route('admin.dashboard') }}" class="menu-item">
