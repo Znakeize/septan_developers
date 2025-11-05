@@ -32,12 +32,30 @@
             max-width: 1400px;
             margin: 0 auto;
         }
+        .projects-filters { text-align: center; margin-top: 10px; }
+        .projects-filters button {
+            background: transparent;
+            border: 2px solid #dc2626;
+            color: #dc2626;
+            padding: 0.6rem 1.4rem;
+            margin: 0.35rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: all 0.25s ease;
+        }
+        .projects-filters button:hover,
+        .projects-filters button.active { background: #dc2626; color: #fff; }
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 40px;
             margin-top: 40px;
         }
+        /* Enable filtering on this page */
+        .projects-grid .project-card { display: none; }
+        .projects-grid .project-card.active { display: block; }
         .project-card {
             background: #1a1a1a;
             border-radius: 10px;
@@ -139,10 +157,23 @@
     </section>
 
     <section class="projects-section">
+        @php
+            $categories = $projects->pluck('category')->filter()->unique()->values();
+            $hasRenovation = $categories->contains(function($c){ return strtolower($c) === 'renovation'; });
+        @endphp
         @if($projects->count() > 0)
+        <div class="projects-filters">
+            <button class="active" data-filter="all">All</button>
+            @foreach($categories as $cat)
+                <button data-filter="{{ $cat }}">{{ ucfirst($cat) }}</button>
+            @endforeach
+            @if(!$hasRenovation)
+                <button data-filter="renovation">Renovation</button>
+            @endif
+        </div>
         <div class="projects-grid">
             @foreach($projects as $project)
-            <div class="project-card" onclick="window.location.href='{{ route('projects.show', $project->slug) }}'" style="cursor: pointer;">
+            <div class="project-card active" data-category="{{ $project->category }}" onclick="window.location.href='{{ route('projects.show', $project->slug) }}'" style="cursor: pointer;">
                 <div class="project-image" style="background-image: url('{{ $project->main_image ? asset('storage/' . $project->main_image) : asset('assets/img/default-project.jpg') }}');"></div>
                 <div class="project-content">
                     <h3>{{ $project->title }}</h3>

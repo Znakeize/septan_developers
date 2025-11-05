@@ -11,7 +11,21 @@ use App\Http\Controllers\Admin\SocialController as AdminSocialController;
 use App\Http\Controllers\Admin\SettingsController;
 
 Route::get('/', function () {
-     $projects = \App\Models\Project::where('is_published', true)->latest()->limit(6)->get();
+     // Prefer published projects; if none, fallback to latest regardless of publish state.
+     $projectsQuery = \App\Models\Project::query()
+         ->orderByDesc('is_featured')
+         ->latest();
+
+     $projects = (clone $projectsQuery)
+         ->where('is_published', true)
+         ->limit(6)
+         ->get();
+
+     if ($projects->isEmpty()) {
+         $projects = $projectsQuery
+             ->limit(6)
+             ->get();
+     }
      $latestBlogs = \App\Models\Blog::where('is_published', true)->latest('published_date')->limit(6)->get();
      
      // Get hero images from database

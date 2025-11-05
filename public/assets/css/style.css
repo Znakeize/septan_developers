@@ -15,9 +15,9 @@ nav ul li.dropdown > ul li { margin: 0.5rem 0; }
 .service-hero { min-height: 70vh; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; background-attachment: fixed; text-align: center; padding: 150px 20px 80px; position: relative; }
 .service-hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1; }
 .hero-slides { position: absolute; inset: 0; z-index: 0; }
-+.hero-nav { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 2; }
-+.hero-nav button { background: rgba(0,0,0,0.4); border: 1px solid #333; color: #fff; width: 44px; height: 44px; border-radius: 9999px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background 0.25s; }
-+.hero-nav button:hover { background: rgba(220,38,38,0.5); }
+.hero-nav { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 2; }
+.hero-nav button { background: rgba(0,0,0,0.4); border: 1px solid #333; color: #fff; width: 44px; height: 44px; border-radius: 9999px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background 0.25s; }
+.hero-nav button:hover { background: rgba(220,38,38,0.5); }
 .service-hero .service-hero-content { position: relative; z-index: 2; }
 /* Page-specific hero background images */
 body[data-page="3d-rendering"] .service-hero { background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(0, 0, 0, 0.9)), url('../img/photo-1600607687939-ce8a6c25118c-7b3ad1b3.jpg'); }
@@ -1065,7 +1065,8 @@ body[data-page="blog-sustainable"] .featured-image { background-image: url('../i
             border: 1px solid #222;
             overflow: hidden;
             transition: all 0.4s ease;
-            display: none;
+            display: block;
+            margin-bottom: 20px;
         }
 
         .project-card.active {
@@ -1077,6 +1078,20 @@ body[data-page="blog-sustainable"] .featured-image { background-image: url('../i
             border-color: #dc2626;
             box-shadow: 0 20px 40px rgba(220, 38, 38, 0.3);
         }
+
+        /* Home: refine project card spacing and clamp description to 4 lines */
+        #projects .project-card .carousel-item-content p { margin-bottom: 8px; }
+        #projects .project-card .carousel-item-content p:last-of-type {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-clamp: 4; /* standard */
+        }
+        /* Increase visible area to comfortably fit 4 lines plus meta */
+        #projects .project-card .carousel-item-content { min-height: 340px; }
+        /* Ensure overall card has enough height */
+        #projects .enhanced-carousel-item.project-card { min-height: 480px; }
 
         .project-image {
             width: 100%;
@@ -1182,7 +1197,8 @@ body[data-page="blog-sustainable"] .featured-image { background-image: url('../i
             border: 1px solid #222;
             overflow: hidden;
             transition: all 0.4s ease;
-            display: none;
+            display: block;
+            margin-bottom: 20px;
         }
 
         .project-card.active {
@@ -1287,6 +1303,7 @@ body[data-page="blog-sustainable"] .featured-image { background-image: url('../i
             background: #111;
             border: 1px solid #222;
             overflow: hidden;
+            margin-bottom: 20px;
             transition: all 0.4s ease;
             display: flex;
             flex-direction: column;
@@ -1297,6 +1314,20 @@ body[data-page="blog-sustainable"] .featured-image { background-image: url('../i
             border-color: #dc2626;
             box-shadow: 0 20px 40px rgba(220, 38, 38, 0.2);
         }
+
+        /* Home: clamp blog excerpt to 4 lines with ellipsis */
+        #blog .blog-card .blog-excerpt {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-clamp: 4; /* standard */
+            margin-bottom: 0;
+        }
+        /* Increase visible area to comfortably fit 4 lines plus meta */
+        #blog .blog-card .carousel-item-content { min-height: 300px; }
+        /* Ensure overall card has enough height */
+        #blog .enhanced-carousel-item.blog-card { min-height: 400px; }
 
         .blog-image {
             width: 100%;

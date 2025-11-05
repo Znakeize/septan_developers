@@ -9,84 +9,227 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <style>
-        /* Carousel Styles */
-        .carousel-container {
+        /* Enhanced Carousel Styles */
+        .enhanced-carousel-container {
             position: relative;
             max-width: 100%;
-            margin: 40px auto;
+            margin: 60px auto;
             padding: 0;
         }
         
-        .carousel-wrapper {
-            overflow: visible;
+        .enhanced-carousel-wrapper {
             position: relative;
-            width: 100%;
-            padding: 0 8%;
+            overflow: visible;
+            padding: 40px 0 48px;
+            margin: 0 auto;
         }
         
-        .carousel-track {
+        .enhanced-carousel-track {
             display: flex;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            gap: 30px;
-            will-change: transform;
             align-items: center;
+            justify-content: center;
+            gap: 0;
+            position: relative;
+            height: 620px;
+            width: 100%;
         }
         
-        .carousel-item {
-            flex: 0 0 calc(33.333% - 20px);
-            min-width: 0;
+        .enhanced-carousel-item {
+            position: absolute;
+            width: 320px;
+            height: 560px;
+            left: 50%;
+            top: 50%;
+            margin-left: -160px;
+            margin-top: -280px;
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
             opacity: 0.5;
-            transform: scale(0.9);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: all;
-            visibility: visible !important;
-            display: flex !important;
-            flex-direction: column;
-            flex-shrink: 0;
+            transform: translateX(0) scale(0.85);
+            z-index: 10;
+            pointer-events: none;
         }
         
-        /* Override project-card display none */
-        .carousel-item.project-card,
-        .carousel-item.blog-card {
-            display: flex !important;
-        }
-        
-        /* Center 3 cards - fully visible */
-        .carousel-item.active-center {
+        .enhanced-carousel-item.active-center {
             opacity: 1 !important;
-            transform: scale(1) !important;
-            z-index: 2;
+            z-index: 30;
+            pointer-events: all;
         }
         
-        /* Side 2 cards - partially visible with 50% opacity */
-        .carousel-item.active-side {
+        .enhanced-carousel-item.active-side {
             opacity: 0.5 !important;
-            transform: scale(0.9) !important;
+            z-index: 20;
+            pointer-events: all;
+        }
+        
+        .enhanced-carousel-item.hidden {
+            opacity: 0;
+            pointer-events: none;
             z-index: 1;
         }
         
-        /* Hidden cards - keep them in DOM but invisible */
-        .carousel-item:not(.active-center):not(.active-side) {
-            opacity: 0;
-            pointer-events: none;
-            z-index: 0;
+        .carousel-item-image {
+            width: 100%;
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .carousel-item-content {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(0, 0, 0, 0.9));
+            padding: 28px 24px 28px;
+            height: calc(100% - 250px);
+            display: flex;
+            flex-direction: column;
+            border-radius: 0 0 12px 12px;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            border-top: none;
+        }
+        
+        .carousel-item-content h3 {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .carousel-item-content p {
+            font-size: 0.95rem;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        
+        .carousel-item-content .blog-category {
+            color: #dc2626;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .carousel-item-content .blog-date {
+            color: #999;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        
+        /* Navigation Buttons */
+        .carousel-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 40;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .carousel-nav-btn:hover {
+            background: rgba(220, 38, 38, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .carousel-nav-btn i {
+            font-size: 20px;
+        }
+        
+        .carousel-prev {
+            left: 20px;
+        }
+        
+        .carousel-next {
+            right: 20px;
+        }
+        
+        /* Dots Indicator */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+        
+        .carousel-dot.active {
+            width: 32px;
+            background: #dc2626;
+            border-radius: 4px;
+        }
+        
+        .carousel-dot:hover {
+            background: rgba(220, 38, 38, 0.6);
+        }
+        
+        /* Info Text */
+        .carousel-info {
+            text-align: center;
+            margin-top: 20px;
+            color: #999;
+            font-size: 0.9rem;
         }
         
         @media (max-width: 1024px) {
-            .carousel-item {
-                flex: 0 0 calc(50% - 15px);
+            .enhanced-carousel-item {
+                width: 280px;
+                height: 500px;
             }
-            .carousel-wrapper {
-                padding: 0 5%;
+            
+            .carousel-nav-btn {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .carousel-prev {
+                left: 10px;
+            }
+            
+            .carousel-next {
+                right: 10px;
             }
         }
         
         @media (max-width: 768px) {
-            .carousel-item {
-                flex: 0 0 100%;
+            .enhanced-carousel-item {
+                width: 90%;
+                max-width: 320px;
+                height: 520px;
             }
-            .carousel-wrapper {
-                padding: 0;
+            
+            .enhanced-carousel-item.active-side {
+                opacity: 0;
+                pointer-events: none;
+            }
+            
+            .carousel-nav-btn {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .carousel-nav-btn i {
+                font-size: 16px;
             }
         }
     </style>
@@ -628,7 +771,6 @@
                     <p>Efficient oversight from planning to completion. We ensure your project stays on schedule and within budget.</p>
                     
                 </div>
-            </div>
         </div>
     </section>
 
@@ -636,20 +778,19 @@
     <section id="projects" class="dark">
         <div class="section-container">
             <h2>OUR <span>PROJECTS</span></h2>
-            <div class="projects-filters">
-                <button class="active" data-filter="all">All</button>
-                <button data-filter="residential">Residential</button>
-                <button data-filter="commercial">Commercial</button>
-                <button data-filter="renovation">Renovation</button>
-            </div>
             @if(isset($projects) && $projects->count() > 0)
-            <div class="carousel-container">
-                <div class="carousel-wrapper">
-                    <div class="carousel-track" id="projects-carousel">
+            <div class="enhanced-carousel-container" data-carousel-type="projects">
+                <div class="enhanced-carousel-wrapper" 
+                     onmouseenter="pauseCarousel('projects')" 
+                     onmouseleave="resumeCarousel('projects')">
+                    <div class="enhanced-carousel-track" id="projects-carousel">
                         @foreach($projects as $project)
-                        <div class="carousel-item project-card" data-category="{{ $project->category }}" onclick="window.location.href='{{ route('projects.show', $project->slug) }}'" style="cursor: pointer;">
-                            <div class="project-image" style="background-image: url('{{ $project->main_image ? asset('storage/' . $project->main_image) : asset('assets/img/default-project.jpg') }}');"></div>
-                            <div class="project-content">
+                        <div class="enhanced-carousel-item project-card" 
+                             data-category="{{ $project->category }}" 
+                             onclick="window.location.href='{{ route('projects.show', $project->slug) }}'"
+                             data-index="{{ $loop->index }}">
+                            <div class="carousel-item-image" style="background-image: url('{{ $project->main_image ? asset('storage/' . $project->main_image) : asset('assets/img/default-project.jpg') }}');"></div>
+                            <div class="carousel-item-content">
                                 <h3>{{ $project->title }}</h3>
                                 <p><strong>Location:</strong> {{ $project->location }} | <strong>Year:</strong> {{ $project->year }}</p>
                                 <p><strong>Type:</strong> {{ $project->type }}</p>
@@ -659,7 +800,15 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
+                <!-- Dots Indicator -->
+                <div class="carousel-dots" id="projects-dots">
+                    @foreach($projects as $index => $project)
+                    <button class="carousel-dot {{ $index === 0 ? 'active' : '' }}" 
+                            onclick="goToSlide('projects', {{ $index }})" 
+                            aria-label="Go to slide {{ $index + 1 }}"></button>
+                    @endforeach
+                </div>
+                <!-- Info Text -->
             <div style="text-align: center; margin-top: 40px;">
                 <a href="{{ route('projects.index') }}" class="cta-button">View All Projects</a>
             </div>
@@ -753,13 +902,17 @@
         <div class="section-container">
             <h2>LATEST <span>ARTICLES</span></h2>
             @if(isset($latestBlogs) && $latestBlogs->count() > 0)
-            <div class="carousel-container">
-                <div class="carousel-wrapper">
-                    <div class="carousel-track" id="blog-carousel">
+            <div class="enhanced-carousel-container" data-carousel-type="blog">
+                <div class="enhanced-carousel-wrapper" 
+                     onmouseenter="pauseCarousel('blog')" 
+                     onmouseleave="resumeCarousel('blog')">
+                    <div class="enhanced-carousel-track" id="blog-carousel">
                         @foreach($latestBlogs as $blog)
-                        <div class="carousel-item blog-card" onclick="window.location.href='{{ route('blogs.show', $blog->slug) }}'" style="cursor: pointer;">
-                            <div class="blog-image" style="background-image: url('{{ $blog->featured_image ? asset('storage/' . $blog->featured_image) : asset('assets/img/default-blog.jpg') }}');"></div>
-                            <div class="blog-content">
+                        <div class="enhanced-carousel-item blog-card" 
+                             onclick="window.location.href='{{ route('blogs.show', $blog->slug) }}'"
+                             data-index="{{ $loop->index }}">
+                            <div class="carousel-item-image" style="background-image: url('{{ $blog->featured_image ? asset('storage/' . $blog->featured_image) : asset('assets/img/default-blog.jpg') }}');"></div>
+                            <div class="carousel-item-content">
                                 <div class="blog-category">{{ $blog->category }}</div>
                                 <h3>{{ $blog->title }}</h3>
                                 <div class="blog-date">Published: {{ $blog->published_date->format('F d, Y') }}</div>
@@ -769,7 +922,15 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
+                <!-- Dots Indicator -->
+                <div class="carousel-dots" id="blog-dots">
+                    @foreach($latestBlogs as $index => $blog)
+                    <button class="carousel-dot {{ $index === 0 ? 'active' : '' }}" 
+                            onclick="goToSlide('blog', {{ $index }})" 
+                            aria-label="Go to slide {{ $index + 1 }}"></button>
+                    @endforeach
+                </div>
+                <!-- Info Text -->
             @if($latestBlogs->count() >= 3)
             <div style="text-align: center; margin-top: 40px;">
                 <a href="{{ route('blogs.index') }}" class="cta-button">View All Articles</a>
@@ -847,56 +1008,41 @@
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script>
-        // Carousel state management
+        // Enhanced Carousel state management
         const carouselStates = {
-            projects: { currentIndex: 1, autoInterval: null },
-            blog: { currentIndex: 1, autoInterval: null }
+            projects: { currentIndex: 0, autoInterval: null, isPaused: false },
+            blog: { currentIndex: 0, autoInterval: null, isPaused: false }
         };
 
         // Initialize carousels on page load
         document.addEventListener('DOMContentLoaded', function() {
-            initCarousel('projects');
-            initCarousel('blog');
+            initEnhancedCarousel('projects');
+            initEnhancedCarousel('blog');
         });
 
-        function initCarousel(type) {
+        function initEnhancedCarousel(type) {
             const carousel = document.getElementById(type + '-carousel');
             if (!carousel) return;
             
-            const items = carousel.querySelectorAll('.carousel-item');
+            const items = carousel.querySelectorAll('.enhanced-carousel-item');
             if (items.length === 0) return;
             
-            // Start at index that allows showing side cards
-            // If we have 5+ items, start at index 2 to show cards on both sides
-            // If we have 4 items, start at 1 to show 3 center + 1 side
-            // If we have 3 items, start at 1 to show all 3 in center
-            // If we have fewer, start at 0
-            if (items.length >= 5) {
-                carouselStates[type].currentIndex = 2;
-            } else if (items.length === 4) {
-                carouselStates[type].currentIndex = 1;
-            } else if (items.length === 3) {
-                carouselStates[type].currentIndex = 1;
-            } else {
-                carouselStates[type].currentIndex = Math.min(0, items.length - 1);
-            }
-            
             // Set initial active states
-            updateCarousel(type);
+            updateEnhancedCarousel(type);
             
-            // Auto-advance every 4 seconds (only if we have more than 3 items)
-            if (items.length > 3) {
-                carouselStates[type].autoInterval = setInterval(() => {
+            // Auto-advance every 3 seconds
+            carouselStates[type].autoInterval = setInterval(() => {
+                if (!carouselStates[type].isPaused) {
                     slideCarousel(type, 1);
-                }, 4000);
-            }
+                }
+            }, 3000);
         }
 
         function slideCarousel(type, direction) {
             const carousel = document.getElementById(type + '-carousel');
             if (!carousel) return;
             
-            const items = carousel.querySelectorAll('.carousel-item');
+            const items = carousel.querySelectorAll('.enhanced-carousel-item');
             if (items.length === 0) return;
             
             const totalItems = items.length;
@@ -912,40 +1058,41 @@
                 state.currentIndex = 0;
             }
             
-            updateCarousel(type);
+            updateEnhancedCarousel(type);
         }
 
-        function updateCarousel(type) {
+        function goToSlide(type, index) {
             const carousel = document.getElementById(type + '-carousel');
             if (!carousel) return;
             
-            const items = carousel.querySelectorAll('.carousel-item');
+            const items = carousel.querySelectorAll('.enhanced-carousel-item');
+            if (items.length === 0 || index < 0 || index >= items.length) return;
+            
+            carouselStates[type].currentIndex = index;
+            updateEnhancedCarousel(type);
+        }
+
+        function pauseCarousel(type) {
+            carouselStates[type].isPaused = true;
+        }
+
+        function resumeCarousel(type) {
+            carouselStates[type].isPaused = false;
+        }
+
+        function updateEnhancedCarousel(type) {
+            const carousel = document.getElementById(type + '-carousel');
+            if (!carousel) return;
+            
+            const items = carousel.querySelectorAll('.enhanced-carousel-item');
             if (items.length === 0) return;
             
             const state = carouselStates[type];
             const totalItems = items.length;
-            const carouselWrapper = carousel.parentElement;
-            const wrapperWidth = carouselWrapper.offsetWidth || window.innerWidth;
+            const centerOffset = 350; // Distance between center cards
             
-            // Calculate visible width (84% of wrapper with 8% padding each side)
-            const visibleWidth = wrapperWidth * 0.84;
-            const cardWidth = visibleWidth / 3;
-            const gap = 30;
-            const cardWithGap = cardWidth + gap;
-            
-            // Center the middle of 3 center cards
-            // We show: [side] [center] [center] [center] [side]
-            // The middle center card should be at wrapper center
-            const middleCenterOffset = cardWidth + gap; // Position of middle center card
-            const offset = (wrapperWidth / 2) - middleCenterOffset - (state.currentIndex * cardWithGap);
-            
-            // Apply transform
-            carousel.style.transform = `translateX(${offset}px)`;
-            
-            // Update active states - show 3 center cards + 2 side cards (5 total)
+            // Update item positions and states
             items.forEach((item, index) => {
-                item.classList.remove('active-center', 'active-side');
-                
                 // Calculate relative position
                 let relativeIndex = index - state.currentIndex;
                 
@@ -956,19 +1103,42 @@
                     relativeIndex += totalItems;
                 }
                 
-                // Center 3 cards (indices -1, 0, 1) - fully visible
-                if (relativeIndex >= -1 && relativeIndex <= 1) {
+                // Remove all state classes
+                item.classList.remove('active-center', 'active-side', 'hidden');
+                
+                // Calculate translateX position
+                let translateX = relativeIndex * centerOffset;
+                
+                // Set position and state
+                let scale = 0.85;
+                if (relativeIndex === 0 || relativeIndex === -1 || relativeIndex === 1) {
+                    // Center 3 cards - fully visible
                     item.classList.add('active-center');
-                }
-                // Side 2 cards (indices -2 and 2) - 50% opacity, partially visible
-                else if (relativeIndex === -2 || relativeIndex === 2) {
+                    scale = 1;
+                } else if (relativeIndex === -2 || relativeIndex === 2) {
+                    // Side 2 cards - partially visible
                     item.classList.add('active-side');
+                    scale = 0.9;
+                } else {
+                    // Hidden cards
+                    item.classList.add('hidden');
+                    scale = 0.85;
                 }
-                // If we have fewer than 5 items, show remaining items as side cards
-                else if (totalItems < 5 && Math.abs(relativeIndex) <= 2) {
-                    item.classList.add('active-side');
-                }
+                
+                // Apply transform with both translateX and scale
+                // Start from center position (left: 50%, margin-left: -160px)
+                // Then translateX from center
+                item.style.transform = `translateX(${translateX}px) scale(${scale})`;
             });
+            
+            // Update dots indicator
+            const dotsContainer = document.getElementById(type + '-dots');
+            if (dotsContainer) {
+                const dots = dotsContainer.querySelectorAll('.carousel-dot');
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === state.currentIndex);
+                });
+            }
         }
         
         // Handle window resize
@@ -976,8 +1146,8 @@
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(function() {
-                updateCarousel('projects');
-                updateCarousel('blog');
+                updateEnhancedCarousel('projects');
+                updateEnhancedCarousel('blog');
             }, 250);
         });
     </script>
