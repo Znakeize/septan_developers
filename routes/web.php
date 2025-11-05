@@ -7,11 +7,12 @@ use App\Http\Controllers\BlogController as PublicBlogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
+use App\Http\Controllers\Admin\SocialController as AdminSocialController;
 use App\Http\Controllers\Admin\SettingsController;
 
 Route::get('/', function () {
      $projects = \App\Models\Project::where('is_published', true)->latest()->limit(6)->get();
-     $latestBlogs = \App\Models\Blog::where('is_published', true)->latest('published_date')->limit(3)->get();
+     $latestBlogs = \App\Models\Blog::where('is_published', true)->latest('published_date')->limit(6)->get();
      
      // Get hero images from database
      $heroImageRecord = DB::table('hero_images')->where('page_type', 'home')->first();
@@ -97,6 +98,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
      Route::resource('projects', AdminProjectController::class);
      Route::delete('projects/{project}/gallery/{index}', [AdminProjectController::class, 'removeGalleryImage'])->name('projects.gallery.remove');
      Route::resource('blogs', AdminBlogController::class);
+     Route::get('social', [AdminSocialController::class, 'index'])->name('social.index');
+     Route::post('social', [AdminSocialController::class, 'store'])->name('social.store');
      Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
      Route::post('settings/hero-images', [SettingsController::class, 'updateHeroImages'])->name('settings.hero-images.update');
      Route::delete('settings/hero-images/{pageType}/{index}', [SettingsController::class, 'removeHeroImage'])->name('settings.hero-images.remove');

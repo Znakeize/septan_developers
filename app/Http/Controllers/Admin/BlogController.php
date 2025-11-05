@@ -7,6 +7,7 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Jobs\ShareBlogToSocial;
 
 class BlogController extends Controller
 {
@@ -64,7 +65,11 @@ class BlogController extends Controller
         // Handle boolean field
         $data['is_published'] = $request->has('is_published') ? true : false;
 
-        Blog::create($data);
+        $blog = Blog::create($data);
+
+        if ($request->has('share_social')) {
+            ShareBlogToSocial::dispatch($blog);
+        }
 
         return redirect()->route('admin.blogs.index')
             ->with('success', 'Blog article created successfully!');

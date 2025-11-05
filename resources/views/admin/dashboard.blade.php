@@ -71,6 +71,9 @@
                 <a href="{{ route('admin.settings.index') }}" class="menu-item">
                     <i class="fas fa-cog"></i> Settings
                 </a>
+                <a href="{{ route('admin.social.index') }}" class="menu-item">
+                    <i class="fas fa-share-alt"></i> Social Media
+                </a>
                 <a href="{{ route('home') }}" class="menu-item">
                     <i class="fas fa-globe"></i> View Website
                 </a>
@@ -153,6 +156,10 @@
                     <a href="{{ route('admin.blogs.index') }}" class="action-btn">
                         <i class="fas fa-newspaper"></i>
                         <span>Manage Articles</span>
+                    </a>
+                    <a href="{{ route('admin.social.index') }}" class="action-btn">
+                        <i class="fas fa-share-alt"></i>
+                        <span>Social Media Control</span>
                     </a>
                 </div>
             </div>

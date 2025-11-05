@@ -8,6 +8,88 @@
     <title>Septan Developers - Build Your Vision</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <style>
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            max-width: 100%;
+            margin: 40px auto;
+            padding: 0;
+        }
+        
+        .carousel-wrapper {
+            overflow: visible;
+            position: relative;
+            width: 100%;
+            padding: 0 8%;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 30px;
+            will-change: transform;
+            align-items: center;
+        }
+        
+        .carousel-item {
+            flex: 0 0 calc(33.333% - 20px);
+            min-width: 0;
+            opacity: 0.5;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: all;
+            visibility: visible !important;
+            display: flex !important;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+        
+        /* Override project-card display none */
+        .carousel-item.project-card,
+        .carousel-item.blog-card {
+            display: flex !important;
+        }
+        
+        /* Center 3 cards - fully visible */
+        .carousel-item.active-center {
+            opacity: 1 !important;
+            transform: scale(1) !important;
+            z-index: 2;
+        }
+        
+        /* Side 2 cards - partially visible with 50% opacity */
+        .carousel-item.active-side {
+            opacity: 0.5 !important;
+            transform: scale(0.9) !important;
+            z-index: 1;
+        }
+        
+        /* Hidden cards - keep them in DOM but invisible */
+        .carousel-item:not(.active-center):not(.active-side) {
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @media (max-width: 1024px) {
+            .carousel-item {
+                flex: 0 0 calc(50% - 15px);
+            }
+            .carousel-wrapper {
+                padding: 0 5%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .carousel-item {
+                flex: 0 0 100%;
+            }
+            .carousel-wrapper {
+                padding: 0;
+            }
+        }
+    </style>
 </head>
 <body data-page="index">
     <!-- Navigation -->
@@ -560,22 +642,24 @@
                 <button data-filter="commercial">Commercial</button>
                 <button data-filter="renovation">Renovation</button>
             </div>
-            <div class="projects-grid">
-                @if(isset($projects) && $projects->count() > 0)
-                    @foreach($projects as $project)
-                    <div class="project-card active" data-category="{{ $project->category }}" onclick="window.location.href='{{ route('projects.show', $project->slug) }}'" style="cursor: pointer;">
-                        <div class="project-image" style="background-image: url('{{ $project->main_image ? asset('storage/' . $project->main_image) : asset('assets/img/default-project.jpg') }}');"></div>
-                        <div class="project-content">
-                            <h3>{{ $project->title }}</h3>
-                            <p><strong>Location:</strong> {{ $project->location }} | <strong>Year:</strong> {{ $project->year }}</p>
-                            <p><strong>Type:</strong> {{ $project->type }}</p>
-                            <p>{{ Str::limit($project->description, 150) }}</p>
-                        </div>
-                    </div>
-                    @endforeach
-                @endif
-            </div>
             @if(isset($projects) && $projects->count() > 0)
+            <div class="carousel-container">
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="projects-carousel">
+                        @foreach($projects as $project)
+                        <div class="carousel-item project-card" data-category="{{ $project->category }}" onclick="window.location.href='{{ route('projects.show', $project->slug) }}'" style="cursor: pointer;">
+                            <div class="project-image" style="background-image: url('{{ $project->main_image ? asset('storage/' . $project->main_image) : asset('assets/img/default-project.jpg') }}');"></div>
+                            <div class="project-content">
+                                <h3>{{ $project->title }}</h3>
+                                <p><strong>Location:</strong> {{ $project->location }} | <strong>Year:</strong> {{ $project->year }}</p>
+                                <p><strong>Type:</strong> {{ $project->type }}</p>
+                                <p>{{ Str::limit($project->description, 150) }}</p>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
             <div style="text-align: center; margin-top: 40px;">
                 <a href="{{ route('projects.index') }}" class="cta-button">View All Projects</a>
             </div>
@@ -669,18 +753,22 @@
         <div class="section-container">
             <h2>LATEST <span>ARTICLES</span></h2>
             @if(isset($latestBlogs) && $latestBlogs->count() > 0)
-            <div class="blog-grid">
-                @foreach($latestBlogs as $blog)
-                <div class="blog-card" onclick="window.location.href='{{ route('blogs.show', $blog->slug) }}'" style="cursor: pointer;">
-                    <div class="blog-image" style="background-image: url('{{ $blog->featured_image ? asset('storage/' . $blog->featured_image) : asset('assets/img/default-blog.jpg') }}');"></div>
-                    <div class="blog-content">
-                        <div class="blog-category">{{ $blog->category }}</div>
-                        <h3>{{ $blog->title }}</h3>
-                        <div class="blog-date">Published: {{ $blog->published_date->format('F d, Y') }}</div>
-                        <p class="blog-excerpt">{{ Str::limit($blog->excerpt, 120) }}</p>
+            <div class="carousel-container">
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="blog-carousel">
+                        @foreach($latestBlogs as $blog)
+                        <div class="carousel-item blog-card" onclick="window.location.href='{{ route('blogs.show', $blog->slug) }}'" style="cursor: pointer;">
+                            <div class="blog-image" style="background-image: url('{{ $blog->featured_image ? asset('storage/' . $blog->featured_image) : asset('assets/img/default-blog.jpg') }}');"></div>
+                            <div class="blog-content">
+                                <div class="blog-category">{{ $blog->category }}</div>
+                                <h3>{{ $blog->title }}</h3>
+                                <div class="blog-date">Published: {{ $blog->published_date->format('F d, Y') }}</div>
+                                <p class="blog-excerpt">{{ Str::limit($blog->excerpt, 120) }}</p>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
-                @endforeach
             </div>
             @if($latestBlogs->count() >= 3)
             <div style="text-align: center; margin-top: 40px;">
@@ -758,6 +846,141 @@
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script>
+        // Carousel state management
+        const carouselStates = {
+            projects: { currentIndex: 1, autoInterval: null },
+            blog: { currentIndex: 1, autoInterval: null }
+        };
+
+        // Initialize carousels on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initCarousel('projects');
+            initCarousel('blog');
+        });
+
+        function initCarousel(type) {
+            const carousel = document.getElementById(type + '-carousel');
+            if (!carousel) return;
+            
+            const items = carousel.querySelectorAll('.carousel-item');
+            if (items.length === 0) return;
+            
+            // Start at index that allows showing side cards
+            // If we have 5+ items, start at index 2 to show cards on both sides
+            // If we have 4 items, start at 1 to show 3 center + 1 side
+            // If we have 3 items, start at 1 to show all 3 in center
+            // If we have fewer, start at 0
+            if (items.length >= 5) {
+                carouselStates[type].currentIndex = 2;
+            } else if (items.length === 4) {
+                carouselStates[type].currentIndex = 1;
+            } else if (items.length === 3) {
+                carouselStates[type].currentIndex = 1;
+            } else {
+                carouselStates[type].currentIndex = Math.min(0, items.length - 1);
+            }
+            
+            // Set initial active states
+            updateCarousel(type);
+            
+            // Auto-advance every 4 seconds (only if we have more than 3 items)
+            if (items.length > 3) {
+                carouselStates[type].autoInterval = setInterval(() => {
+                    slideCarousel(type, 1);
+                }, 4000);
+            }
+        }
+
+        function slideCarousel(type, direction) {
+            const carousel = document.getElementById(type + '-carousel');
+            if (!carousel) return;
+            
+            const items = carousel.querySelectorAll('.carousel-item');
+            if (items.length === 0) return;
+            
+            const totalItems = items.length;
+            const state = carouselStates[type];
+            
+            // Update index
+            state.currentIndex += direction;
+            
+            // Loop around
+            if (state.currentIndex < 0) {
+                state.currentIndex = totalItems - 1;
+            } else if (state.currentIndex >= totalItems) {
+                state.currentIndex = 0;
+            }
+            
+            updateCarousel(type);
+        }
+
+        function updateCarousel(type) {
+            const carousel = document.getElementById(type + '-carousel');
+            if (!carousel) return;
+            
+            const items = carousel.querySelectorAll('.carousel-item');
+            if (items.length === 0) return;
+            
+            const state = carouselStates[type];
+            const totalItems = items.length;
+            const carouselWrapper = carousel.parentElement;
+            const wrapperWidth = carouselWrapper.offsetWidth || window.innerWidth;
+            
+            // Calculate visible width (84% of wrapper with 8% padding each side)
+            const visibleWidth = wrapperWidth * 0.84;
+            const cardWidth = visibleWidth / 3;
+            const gap = 30;
+            const cardWithGap = cardWidth + gap;
+            
+            // Center the middle of 3 center cards
+            // We show: [side] [center] [center] [center] [side]
+            // The middle center card should be at wrapper center
+            const middleCenterOffset = cardWidth + gap; // Position of middle center card
+            const offset = (wrapperWidth / 2) - middleCenterOffset - (state.currentIndex * cardWithGap);
+            
+            // Apply transform
+            carousel.style.transform = `translateX(${offset}px)`;
+            
+            // Update active states - show 3 center cards + 2 side cards (5 total)
+            items.forEach((item, index) => {
+                item.classList.remove('active-center', 'active-side');
+                
+                // Calculate relative position
+                let relativeIndex = index - state.currentIndex;
+                
+                // Handle wrap-around for circular carousel
+                if (relativeIndex > totalItems / 2) {
+                    relativeIndex -= totalItems;
+                } else if (relativeIndex < -totalItems / 2) {
+                    relativeIndex += totalItems;
+                }
+                
+                // Center 3 cards (indices -1, 0, 1) - fully visible
+                if (relativeIndex >= -1 && relativeIndex <= 1) {
+                    item.classList.add('active-center');
+                }
+                // Side 2 cards (indices -2 and 2) - 50% opacity, partially visible
+                else if (relativeIndex === -2 || relativeIndex === 2) {
+                    item.classList.add('active-side');
+                }
+                // If we have fewer than 5 items, show remaining items as side cards
+                else if (totalItems < 5 && Math.abs(relativeIndex) <= 2) {
+                    item.classList.add('active-side');
+                }
+            });
+        }
+        
+        // Handle window resize
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                updateCarousel('projects');
+                updateCarousel('blog');
+            }, 250);
+        });
+    </script>
 </body>
 </html>
 

@@ -218,6 +218,12 @@
                             <label for="is_published" style="margin: 0;">Published (visible on website)</label>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="share_social" name="share_social" value="1" {{ old('share_social') ? 'checked' : '' }}>
+                            <label for="share_social" style="margin: 0;">Share to Social Media after publishing</label>
+                        </div>
+                    </div>
 
                     <div class="btn-group">
                         <button type="submit" class="btn btn-primary">

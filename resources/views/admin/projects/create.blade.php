@@ -174,7 +174,81 @@
                                 </div>
                                 <div class="form-group input-group">
                                     <i class="fas fa-icons"></i>
-                                    <input type="text" name="features[{{$i}}][icon]" placeholder="Font Awesome icon e.g. leaf, wind, solar-panel" value="{{ old('features.'.$i.'.icon') }}">
+                                    <select name="features[{{$i}}][icon]" style="width: 100%; padding: 12px 12px 12px 42px; border: 1px solid #222; border-radius: 6px; background:#0b0b0b; color: #e5e5e5; font-size: 14px;">
+                                        <option value="">Select Icon</option>
+                                        <optgroup label="Nature & Environment">
+                                            <option value="leaf" {{ old('features.'.$i.'.icon') == 'leaf' ? 'selected' : '' }}>🌿 Leaf</option>
+                                            <option value="seedling" {{ old('features.'.$i.'.icon') == 'seedling' ? 'selected' : '' }}>🌱 Seedling</option>
+                                            <option value="tree" {{ old('features.'.$i.'.icon') == 'tree' ? 'selected' : '' }}>🌳 Tree</option>
+                                            <option value="mountain" {{ old('features.'.$i.'.icon') == 'mountain' ? 'selected' : '' }}>⛰️ Mountain</option>
+                                            <option value="sun" {{ old('features.'.$i.'.icon') == 'sun' ? 'selected' : '' }}>☀️ Sun</option>
+                                            <option value="cloud" {{ old('features.'.$i.'.icon') == 'cloud' ? 'selected' : '' }}>☁️ Cloud</option>
+                                            <option value="water" {{ old('features.'.$i.'.icon') == 'water' ? 'selected' : '' }}>💧 Water</option>
+                                        </optgroup>
+                                        <optgroup label="Energy & Sustainability">
+                                            <option value="solar-panel" {{ old('features.'.$i.'.icon') == 'solar-panel' ? 'selected' : '' }}>☀️ Solar Panel</option>
+                                            <option value="bolt" {{ old('features.'.$i.'.icon') == 'bolt' ? 'selected' : '' }}>⚡ Bolt</option>
+                                            <option value="wind" {{ old('features.'.$i.'.icon') == 'wind' ? 'selected' : '' }}>💨 Wind</option>
+                                            <option value="recycle" {{ old('features.'.$i.'.icon') == 'recycle' ? 'selected' : '' }}>♻️ Recycle</option>
+                                            <option value="leaf" {{ old('features.'.$i.'.icon') == 'leaf' ? 'selected' : '' }}>🌿 Eco-Friendly</option>
+                                            <option value="battery-full" {{ old('features.'.$i.'.icon') == 'battery-full' ? 'selected' : '' }}>🔋 Battery</option>
+                                        </optgroup>
+                                        <optgroup label="Building & Construction">
+                                            <option value="building" {{ old('features.'.$i.'.icon') == 'building' ? 'selected' : '' }}>🏢 Building</option>
+                                            <option value="home" {{ old('features.'.$i.'.icon') == 'home' ? 'selected' : '' }}>🏠 Home</option>
+                                            <option value="warehouse" {{ old('features.'.$i.'.icon') == 'warehouse' ? 'selected' : '' }}>🏭 Warehouse</option>
+                                            <option value="city" {{ old('features.'.$i.'.icon') == 'city' ? 'selected' : '' }}>🏙️ City</option>
+                                            <option value="hammer" {{ old('features.'.$i.'.icon') == 'hammer' ? 'selected' : '' }}>🔨 Hammer</option>
+                                            <option value="tools" {{ old('features.'.$i.'.icon') == 'tools' ? 'selected' : '' }}>🔧 Tools</option>
+                                            <option value="hard-hat" {{ old('features.'.$i.'.icon') == 'hard-hat' ? 'selected' : '' }}>⛑️ Hard Hat</option>
+                                        </optgroup>
+                                        <optgroup label="Comfort & Wellness">
+                                            <option value="spa" {{ old('features.'.$i.'.icon') == 'spa' ? 'selected' : '' }}>🧘 Spa</option>
+                                            <option value="heart" {{ old('features.'.$i.'.icon') == 'heart' ? 'selected' : '' }}>❤️ Heart</option>
+                                            <option value="bed" {{ old('features.'.$i.'.icon') == 'bed' ? 'selected' : '' }}>🛏️ Bed</option>
+                                            <option value="couch" {{ old('features.'.$i.'.icon') == 'couch' ? 'selected' : '' }}>🛋️ Couch</option>
+                                            <option value="umbrella-beach" {{ old('features.'.$i.'.icon') == 'umbrella-beach' ? 'selected' : '' }}>🏖️ Beach</option>
+                                            <option value="swimming-pool" {{ old('features.'.$i.'.icon') == 'swimming-pool' ? 'selected' : '' }}>🏊 Pool</option>
+                                        </optgroup>
+                                        <optgroup label="Technology & Innovation">
+                                            <option value="wifi" {{ old('features.'.$i.'.icon') == 'wifi' ? 'selected' : '' }}>📶 WiFi</option>
+                                            <option value="laptop" {{ old('features.'.$i.'.icon') == 'laptop' ? 'selected' : '' }}>💻 Laptop</option>
+                                            <option value="lightbulb" {{ old('features.'.$i.'.icon') == 'lightbulb' ? 'selected' : '' }}>💡 Lightbulb</option>
+                                            <option value="cog" {{ old('features.'.$i.'.icon') == 'cog' ? 'selected' : '' }}>⚙️ Cog</option>
+                                            <option value="microchip" {{ old('features.'.$i.'.icon') == 'microchip' ? 'selected' : '' }}>🔬 Microchip</option>
+                                        </optgroup>
+                                        <optgroup label="Safety & Security">
+                                            <option value="shield-alt" {{ old('features.'.$i.'.icon') == 'shield-alt' ? 'selected' : '' }}>🛡️ Shield</option>
+                                            <option value="lock" {{ old('features.'.$i.'.icon') == 'lock' ? 'selected' : '' }}>🔒 Lock</option>
+                                            <option value="fire-extinguisher" {{ old('features.'.$i.'.icon') == 'fire-extinguisher' ? 'selected' : '' }}>🧯 Fire Extinguisher</option>
+                                            <option value="first-aid" {{ old('features.'.$i.'.icon') == 'first-aid' ? 'selected' : '' }}>🏥 First Aid</option>
+                                        </optgroup>
+                                        <optgroup label="Design & Aesthetics">
+                                            <option value="paint-brush" {{ old('features.'.$i.'.icon') == 'paint-brush' ? 'selected' : '' }}>🖌️ Paint Brush</option>
+                                            <option value="palette" {{ old('features.'.$i.'.icon') == 'palette' ? 'selected' : '' }}>🎨 Palette</option>
+                                            <option value="image" {{ old('features.'.$i.'.icon') == 'image' ? 'selected' : '' }}>🖼️ Image</option>
+                                            <option value="camera" {{ old('features.'.$i.'.icon') == 'camera' ? 'selected' : '' }}>📷 Camera</option>
+                                            <option value="gem" {{ old('features.'.$i.'.icon') == 'gem' ? 'selected' : '' }}>💎 Gem</option>
+                                        </optgroup>
+                                        <optgroup label="Transportation">
+                                            <option value="car" {{ old('features.'.$i.'.icon') == 'car' ? 'selected' : '' }}>🚗 Car</option>
+                                            <option value="bicycle" {{ old('features.'.$i.'.icon') == 'bicycle' ? 'selected' : '' }}>🚲 Bicycle</option>
+                                            <option value="parking" {{ old('features.'.$i.'.icon') == 'parking' ? 'selected' : '' }}>🅿️ Parking</option>
+                                        </optgroup>
+                                        <optgroup label="Utilities">
+                                            <option value="faucet" {{ old('features.'.$i.'.icon') == 'faucet' ? 'selected' : '' }}>🚿 Faucet</option>
+                                            <option value="toilet" {{ old('features.'.$i.'.icon') == 'toilet' ? 'selected' : '' }}>🚽 Toilet</option>
+                                            <option value="air-conditioner" {{ old('features.'.$i.'.icon') == 'air-conditioner' ? 'selected' : '' }}>❄️ Air Conditioner</option>
+                                            <option value="fan" {{ old('features.'.$i.'.icon') == 'fan' ? 'selected' : '' }}>🌀 Fan</option>
+                                        </optgroup>
+                                        <optgroup label="Other">
+                                            <option value="star" {{ old('features.'.$i.'.icon') == 'star' ? 'selected' : '' }}>⭐ Star</option>
+                                            <option value="trophy" {{ old('features.'.$i.'.icon') == 'trophy' ? 'selected' : '' }}>🏆 Trophy</option>
+                                            <option value="award" {{ old('features.'.$i.'.icon') == 'award' ? 'selected' : '' }}>🏅 Award</option>
+                                            <option value="check-circle" {{ old('features.'.$i.'.icon') == 'check-circle' ? 'selected' : '' }}>✅ Check Circle</option>
+                                            <option value="thumbs-up" {{ old('features.'.$i.'.icon') == 'thumbs-up' ? 'selected' : '' }}>👍 Thumbs Up</option>
+                                        </optgroup>
+                                    </select>
                                 </div>
                             </div>
                             @endfor
@@ -238,6 +312,12 @@
                             <div class="checkbox-group">
                                 <input type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }}>
                                 <label for="is_featured" style="margin: 0;">Featured</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="share_social" name="share_social" value="1" {{ old('share_social') ? 'checked' : '' }}>
+                                <label for="share_social" style="margin: 0;">Share to Social Media after saving</label>
                             </div>
                         </div>
                     </div>

@@ -7,6 +7,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Jobs\ShareProjectToSocial;
 
 class ProjectController extends Controller
 {
@@ -82,7 +83,11 @@ class ProjectController extends Controller
         $data['is_published'] = $request->has('is_published') ? true : false;
         $data['is_featured'] = $request->has('is_featured') ? true : false;
 
-        Project::create($data);
+        $project = Project::create($data);
+
+        if ($request->has('share_social')) {
+            ShareProjectToSocial::dispatch($project);
+        }
 
         return redirect()->route('admin.projects.index')
             ->with('success', 'Project created successfully!');
