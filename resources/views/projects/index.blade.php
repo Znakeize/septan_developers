@@ -149,9 +149,21 @@
 </div>
     </nav>
 
-    <section class="projects-page-header">
-        <div>
-            <h1>OUR <span style="color: #dc2626;">PROJECTS</span></h1>
+    <section class="project-hero blog-hero" style="position:relative;">
+        <div class="hero-slides">
+            @php
+                $slideProjects = $projects->take(8);
+            @endphp
+            @forelse($slideProjects as $idx => $p)
+                <div class="hero-slide {{ $idx === 0 ? 'active' : '' }}" style="background-image: url('{{ $p->main_image ? asset('storage/' . $p->main_image) : asset('assets/img/default-project.jpg') }}');"></div>
+            @empty
+                <div class="hero-slide active" style="background-image: url('{{ asset('assets/img/amila_ruwan-liyanapathirana-wood-locally-bricks-hotel-moksha-nature-sri-lanka-designboom-03-1-b5a51208.jpg') }}');"></div>
+                <div class="hero-slide" style="background-image: url('{{ asset('assets/img/seamless-regeneration-in-the-jungle-5-633956dc14e9a-5316f9fa.jpg') }}');"></div>
+                <div class="hero-slide" style="background-image: url('{{ asset('assets/img/palinda-kannagara-linear-house-at-battaramulla-sri-lanka-designboom-mobile-55e43d88.jpg') }}');"></div>
+            @endforelse
+        </div>
+        <div class="blog-hero-content" style="position:relative;z-index:2;text-align:center;padding:0 2rem;">
+            <h1>OUR <span style="color:#dc2626;">PROJECTS</span></h1>
             <p>Explore our portfolio of innovative construction and design projects</p>
         </div>
     </section>

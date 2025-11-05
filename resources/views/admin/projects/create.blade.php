@@ -12,10 +12,10 @@
         .admin-container { display: flex; min-height: 100vh; }
         .sidebar { width: 260px; background: #1a1a1a; color: #fff; padding: 20px 0; position: fixed; height: 100vh; overflow-y: auto; }
         .sidebar-header { padding: 0 20px 30px; border-bottom: 1px solid #333; }
-        .sidebar-header h2 { font-size: 24px; color: #ff4b33; }
+        .sidebar-header h2 { font-size: 24px; color: #dc2626; }
         .sidebar-menu { padding: 20px 0; }
         .menu-item { padding: 12px 20px; color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 12px; transition: all 0.3s; }
-        .menu-item:hover, .menu-item.active { background: #ff4b33; color: #fff; }
+        .menu-item:hover, .menu-item.active { background: #dc2626; color: #fff; }
         
         .main-content { flex: 1; margin-left: 260px; padding: 30px; }
         .form-container { background: #0f0f0f; padding: 30px; border-radius: 10px; border:1px solid #222; max-width: 1000px; }
@@ -45,7 +45,7 @@
         }
         .drop-zone:hover, .drop-zone.dragover { border-color: #dc2626; background: #0f0f0f; color: #dc2626; }
         .drop-zone i { font-size: 2.5rem; margin-bottom: 10px; color: #6b7280; }
-        .drop-zone.dragover i { color: #ff4b33; }
+        .drop-zone.dragover i { color: #dc2626; }
         .drop-zone input { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
         .file-list { margin-top: 10px; font-size: 0.85rem; color: #666; max-height: 80px; overflow-y: auto; width: 100%; }
         
@@ -62,7 +62,7 @@
         .btn-secondary { background: #374151; color: #fff; }
         .btn-secondary:hover { background: #1f2937; }
         
-        .error { color: #ef4444; font-size: 13px; margin-top: 5px; }
+        .error { color: #dc2626; font-size: 13px; margin-top: 5px; }
         .help-text { font-size: 12px; color: #9ca3af; margin-top: 5px; }
     </style>
 </head>
@@ -93,7 +93,7 @@
         <main class="main-content">
             <div class="form-container">
                 <div class="form-header">
-                    <h1>ADD <span style="color: #ff4b33;">NEW</span> PROJECT</h1>
+                    <h1>ADD <span style="color: #ffffffff;">NEW</span> PROJECT</h1>
                     <a href="{{ route('admin.projects.index') }}" class="back-btn">
                         <i class="fas fa-arrow-left"></i> Back to Projects
                     </a>
