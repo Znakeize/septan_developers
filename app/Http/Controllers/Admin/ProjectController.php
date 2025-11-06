@@ -89,6 +89,15 @@ class ProjectController extends Controller
             ShareProjectToSocial::dispatch($project);
         }
 
+        if ($request->ajax() || $request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'project_id' => $project->id,
+                'id' => $project->id,
+                'message' => 'Project created successfully!'
+            ]);
+        }
+
         return redirect()->route('admin.projects.index')
             ->with('success', 'Project created successfully!');
     }

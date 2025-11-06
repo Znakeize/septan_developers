@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Add Project - Septan Developers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -332,21 +333,23 @@
         </main>
     </div>
 
+    @include('admin.social.publish-modal')
+
     <!-- AI Assistant Toggle & Panel -->
-    <button id="ai-toggle" style="position: fixed; right: 20px; bottom: 20px; z-index: 1000; background: #6b21a8; color: #fff; border: none; border-radius: 9999px; padding: 12px 16px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.4);">
+    <button id="ai-toggle" style="position: fixed; right: 20px; bottom: 20px; z-index: 1000; background: #b91c1c; color: #fff; border: none; border-radius: 9999px; padding: 12px 16px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.4);">
         <span style="margin-right:6px;">✨</span> AI Assistant
     </button>
 
-    <div id="ai-panel" style="position: fixed; top: 0; right: 0; height: 100%; width: 320px; background: linear-gradient(135deg, rgba(46,16,101,0.95), rgba(0,0,0,0.95)); border-left: 1px solid rgba(168,85,247,0.3); backdrop-filter: blur(8px); transform: translateX(100%); transition: transform 0.3s ease; z-index: 1000; color: #e5e7eb;">
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:16px; border-bottom: 1px solid rgba(168,85,247,0.2);">
+    <div id="ai-panel" style="position: fixed; top: 0; right: 0; height: 100%; width: 320px; background: linear-gradient(135deg, rgba(160, 16, 16, 0.95), rgba(0,0,0,0.95)); border-left: 1px solid rgba(168,85,247,0.3); backdrop-filter: blur(8px); transform: translateX(100%); transition: transform 0.3s ease; z-index: 1000; color: #e5e7eb;">
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:16px; border-bottom: 1px solid rgba(247, 85, 85, 0.2);">
             <div style="display:flex; align-items:center; gap:8px; font-weight:600;">✨ <span>AI Assistant</span></div>
             <button id="ai-close" style="background:transparent; color:#9ca3af; border:none; font-size:18px; cursor:pointer;">✕</button>
         </div>
         <div style="padding: 12px;">
-            <button class="ai-action" data-action="title" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(147,51,234,0.15); border:1px solid rgba(147,51,234,0.25); border-radius:8px; color:#e9d5ff; margin-bottom:10px;">🏷️ Generate Project Name</button>
-            <button class="ai-action" data-action="description" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(147,51,234,0.15); border:1px solid rgba(147,51,234,0.25); border-radius:8px; color:#e9d5ff; margin-bottom:10px;">📝 Write Description</button>
-            <button class="ai-action" data-action="features" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(147,51,234,0.15); border:1px solid rgba(147,51,234,0.25); border-radius:8px; color:#e9d5ff;">✨ Autofill Features</button>
-            <div id="ai-tip" style="margin-top:16px; font-size:12px; color:#c4b5fd; border:1px solid rgba(147,51,234,0.25); background: rgba(147,51,234,0.08); border-radius:8px; padding:10px;">Tip: Fill location/type for more relevant suggestions.</div>
+            <button class="ai-action" data-action="title" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(234, 51, 51, 0.15); border:1px solid rgba(234, 51, 51, 0.25); border-radius:8px; color:#e9d5ff; margin-bottom:10px;">🏷️ Generate Project Name</button>
+            <button class="ai-action" data-action="description" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(234, 51, 51, 0.15); border:1px solid rgba(234, 51, 51, 0.25); border-radius:8px; color:#e9d5ff; margin-bottom:10px;">📝 Write Description</button>
+            <button class="ai-action" data-action="features" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(234, 51, 51, 0.15); border:1px solid rgba(234, 51, 51, 0.25); border-radius:8px; color:#e9d5ff;">✨ Autofill Features</button>
+            <div id="ai-tip" style="margin-top:16px; font-size:12px; color:#c4b5fd; border:1px solid rgba(234, 51, 51, 0.25); background: rgba(234, 51, 51, 0.08); border-radius:8px; padding:10px;">Tip: Fill location/type for more relevant suggestions.</div>
             <div id="ai-loading" style="display:none; margin-top:12px; font-size:12px; color:#a78bfa;">Working…</div>
         </div>
     </div>
@@ -555,6 +558,41 @@
 
         // Initialize visibility on load
         initFeatureCards();
+
+        // Social share handling
+        document.getElementById('project-form').addEventListener('submit', async function(e) {
+            const share = document.getElementById('share_social');
+            if (share && share.checked) {
+                e.preventDefault();
+                const form = e.target;
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        }
+                    });
+                    const data = await response.json();
+                    if (response.ok && data && (data.project_id || data.id)) {
+                        openSocialModal('project', data.project_id || data.id);
+                    } else {
+                        alert('Error saving project');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }
+                } catch (err) {
+                    alert('Error: ' + err.message);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            }
+        });
     </script>
 </body>
 </html>

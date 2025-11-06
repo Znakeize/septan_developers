@@ -71,6 +71,15 @@ class BlogController extends Controller
             ShareBlogToSocial::dispatch($blog);
         }
 
+        if ($request->ajax() || $request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'blog_id' => $blog->id,
+                'id' => $blog->id,
+                'message' => 'Blog article created successfully!'
+            ]);
+        }
+
         return redirect()->route('admin.blogs.index')
             ->with('success', 'Blog article created successfully!');
     }
