@@ -119,11 +119,6 @@
                                 <option value="Green Hotel" {{ old('type') == 'Green Hotel' ? 'selected' : '' }}>Green Hotel</option>
                             </select>
                         </div>
-                        <div class="form-group input-group">
-                            <i class="fas fa-i-cursor"></i>
-                            <input type="text" id="type_custom" name="type_custom" placeholder="Or enter custom type" value="{{ old('type_custom') }}">
-                            <div class="help-text">If filled, this will override the selected type.</div>
-                        </div>
                     </div>
 
                     <div class="form-row">
@@ -163,7 +158,8 @@
                         <label style="display:block;margin-bottom:10px;font-weight:600;">Feature Cards (up to 6)</label>
                         <div class="form-row">
                             @for($i=0; $i<6; $i++)
-                            <div class="form-group" style="border:1px dashed #ddd;border-radius:8px;padding:12px;">
+                            <div class="form-group feature-card" data-index="{{$i}}" style="border:1px dashed #ddd;border-radius:8px;padding:12px; position: relative;">
+                                <button type="button" class="remove-feature" style="position:absolute; top:6px; right:6px; background:#ef4444; color:#fff; border:none; width:24px; height:24px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">×</button>
                                 <div class="form-group input-group">
                                     <i class="fas fa-heading"></i>
                                     <input type="text" name="features[{{$i}}][title]" placeholder="Feature title" value="{{ old('features.'.$i.'.title') }}">
@@ -253,6 +249,10 @@
                             </div>
                             @endfor
                         </div>
+                        <div style="margin-top:10px; display:flex; gap:10px; align-items:center;">
+                            <button type="button" id="add-feature" class="btn btn-secondary">+ Add Feature</button>
+                            <span id="feature-count" class="help-text">0/6 features shown</span>
+                        </div>
                         <div class="help-text">Leave any unused feature blocks empty.</div>
                     </div>
 
@@ -321,7 +321,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="btn-group">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save"></i> Save Project
@@ -331,6 +330,25 @@
   </form>
 </div>
         </main>
+    </div>
+
+    <!-- AI Assistant Toggle & Panel -->
+    <button id="ai-toggle" style="position: fixed; right: 20px; bottom: 20px; z-index: 1000; background: #6b21a8; color: #fff; border: none; border-radius: 9999px; padding: 12px 16px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.4);">
+        <span style="margin-right:6px;">✨</span> AI Assistant
+    </button>
+
+    <div id="ai-panel" style="position: fixed; top: 0; right: 0; height: 100%; width: 320px; background: linear-gradient(135deg, rgba(46,16,101,0.95), rgba(0,0,0,0.95)); border-left: 1px solid rgba(168,85,247,0.3); backdrop-filter: blur(8px); transform: translateX(100%); transition: transform 0.3s ease; z-index: 1000; color: #e5e7eb;">
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:16px; border-bottom: 1px solid rgba(168,85,247,0.2);">
+            <div style="display:flex; align-items:center; gap:8px; font-weight:600;">✨ <span>AI Assistant</span></div>
+            <button id="ai-close" style="background:transparent; color:#9ca3af; border:none; font-size:18px; cursor:pointer;">✕</button>
+        </div>
+        <div style="padding: 12px;">
+            <button class="ai-action" data-action="title" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(147,51,234,0.15); border:1px solid rgba(147,51,234,0.25); border-radius:8px; color:#e9d5ff; margin-bottom:10px;">🏷️ Generate Project Name</button>
+            <button class="ai-action" data-action="description" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(147,51,234,0.15); border:1px solid rgba(147,51,234,0.25); border-radius:8px; color:#e9d5ff; margin-bottom:10px;">📝 Write Description</button>
+            <button class="ai-action" data-action="features" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(147,51,234,0.15); border:1px solid rgba(147,51,234,0.25); border-radius:8px; color:#e9d5ff;">✨ Autofill Features</button>
+            <div id="ai-tip" style="margin-top:16px; font-size:12px; color:#c4b5fd; border:1px solid rgba(147,51,234,0.25); background: rgba(147,51,234,0.08); border-radius:8px; padding:10px;">Tip: Fill location/type for more relevant suggestions.</div>
+            <div id="ai-loading" style="display:none; margin-top:12px; font-size:12px; color:#a78bfa;">Working…</div>
+        </div>
     </div>
 
     <script>
@@ -426,6 +444,117 @@
                 galleryPreview.style.display = 'grid';
             }
         }
+
+        // AI Assistant Logic
+        const aiToggle = document.getElementById('ai-toggle');
+        const aiPanel = document.getElementById('ai-panel');
+        const aiClose = document.getElementById('ai-close');
+        const aiLoadingEl = document.getElementById('ai-loading');
+        const aiActions = document.querySelectorAll('.ai-action');
+
+        let aiBusy = false;
+        function openAiPanel() { aiPanel.style.transform = 'translateX(0)'; }
+        function closeAiPanel() { aiPanel.style.transform = 'translateX(100%)'; }
+        aiToggle.addEventListener('click', openAiPanel);
+        aiClose.addEventListener('click', closeAiPanel);
+
+        async function simulateAI() {
+            aiBusy = true;
+            aiLoadingEl.style.display = 'block';
+            await new Promise(r => setTimeout(r, 1200));
+            aiLoadingEl.style.display = 'none';
+            aiBusy = false;
+        }
+
+        function setIfEmpty(inputEl, value) {
+            if (!inputEl.value || inputEl.value.trim() === '') inputEl.value = value;
+        }
+
+        function setFeature(i, title, description, icon) {
+            const titleEl = document.querySelector(`input[name="features[${i}][title]"]`);
+            const descEl = document.querySelector(`input[name="features[${i}][description]"]`);
+            const iconEl = document.querySelector(`select[name="features[${i}][icon]"]`);
+            if (titleEl) setIfEmpty(titleEl, title);
+            if (descEl) setIfEmpty(descEl, description);
+            if (iconEl && icon) iconEl.value = icon;
+        }
+
+        aiActions.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                if (aiBusy) return;
+                const action = btn.getAttribute('data-action');
+                await simulateAI();
+                if (action === 'title') {
+                    const titleEl = document.getElementById('title');
+                    const type = document.getElementById('type').value || 'Sustainable';
+                    const location = document.getElementById('location').value || 'Sri Lanka';
+                    setIfEmpty(titleEl, `${type} Project in ${location}`);
+                    titleEl.focus();
+                } else if (action === 'description') {
+                    const desc = document.getElementById('description');
+                    const type = document.getElementById('type').value || 'Eco-Friendly Development';
+                    const category = document.getElementById('category').value || 'residential';
+                    setIfEmpty(desc, `A ${type.toLowerCase()} focused ${category} project emphasizing passive cooling, natural light, and locally sourced materials to reduce carbon footprint while enhancing occupant comfort.`);
+                    desc.focus();
+                } else if (action === 'features') {
+                    setFeature(0, 'Passive Ventilation', 'Cross-ventilated layout reduces reliance on AC.', 'fan');
+                    setFeature(1, 'Solar Integration', 'Rooftop PV meets core energy needs.', 'solar-panel');
+                    setFeature(2, 'Rainwater Harvesting', 'Stored water reused for landscaping and utilities.', 'water');
+                    setFeature(3, 'Biophilic Design', 'Ample greenery and courtyard spaces for wellness.', 'leaf');
+                    setFeature(4, 'Smart Controls', 'Automated lighting and climate optimization.', 'lightbulb');
+                }
+            });
+        });
+
+        // Feature Cards dynamic show/hide up to 6
+        const featureCards = Array.from(document.querySelectorAll('.feature-card'));
+        const addFeatureBtn = document.getElementById('add-feature');
+        const featureCountEl = document.getElementById('feature-count');
+
+        function isCardEmpty(card){
+            const t = card.querySelector('input[name^="features"][name$="[title]"]');
+            const d = card.querySelector('input[name^="features"][name$="[description]"]');
+            const i = card.querySelector('select[name^="features"][name$="[icon]"]');
+            return (!t.value.trim() && !d.value.trim() && !i.value.trim());
+        }
+
+        function updateFeatureCount(){
+            const visible = featureCards.filter(c => c.style.display !== 'none').length;
+            featureCountEl.textContent = `${visible}/6 features shown`;
+            addFeatureBtn.disabled = visible >= 6;
+        }
+
+        function initFeatureCards(){
+            // Hide all empty cards except the first
+            let firstShown = false;
+            featureCards.forEach((card, idx) => {
+                const removeBtn = card.querySelector('.remove-feature');
+                removeBtn.addEventListener('click', () => clearAndHide(card));
+                if (isCardEmpty(card)) {
+                    if (!firstShown) { card.style.display = ''; firstShown = true; } else { card.style.display = 'none'; }
+                } else {
+                    card.style.display = '';
+                }
+            });
+            updateFeatureCount();
+        }
+
+        function clearAndHide(card){
+            card.querySelectorAll('input, select').forEach(el => { if (el.tagName === 'SELECT') el.value = ''; else el.value = ''; });
+            card.style.display = 'none';
+            updateFeatureCount();
+        }
+
+        addFeatureBtn.addEventListener('click', () => {
+            const next = featureCards.find(c => c.style.display === 'none');
+            if (next) {
+                next.style.display = '';
+            }
+            updateFeatureCount();
+        });
+
+        // Initialize visibility on load
+        initFeatureCards();
     </script>
 </body>
 </html>

@@ -236,6 +236,26 @@
         </main>
     </div>
 
+    <!-- AI Assistant Toggle & Panel -->
+    <button id="ai-toggle" style="position: fixed; right: 20px; bottom: 20px; z-index: 1000; background: #6b21a8; color: #fff; border: none; border-radius: 9999px; padding: 12px 16px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.4);">
+        <span style="margin-right:6px;">✨</span> AI Assistant
+    </button>
+
+    <div id="ai-panel" style="position: fixed; top: 0; right: 0; height: 100%; width: 320px; background: linear-gradient(135deg, rgba(46,16,101,0.95), rgba(0,0,0,0.95)); border-left: 1px solid rgba(168,85,247,0.3); backdrop-filter: blur(8px); transform: translateX(100%); transition: transform 0.3s ease; z-index: 1000; color: #e5e7eb;">
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:16px; border-bottom: 1px solid rgba(168,85,247,0.2);">
+            <div style="display:flex; align-items:center; gap:8px; font-weight:600;">✨ <span>AI Assistant</span></div>
+            <button id="ai-close" style="background:transparent; color:#9ca3af; border:none; font-size:18px; cursor:pointer;">✕</button>
+        </div>
+        <div style="padding: 12px;">
+            <button class="ai-action" data-action="title" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(147,51,234,0.15); border:1px solid rgba(147,51,234,0.25); border-radius:8px; color:#e9d5ff; margin-bottom:10px;">🏷️ Generate Title</button>
+            <button class="ai-action" data-action="excerpt" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(147,51,234,0.15); border:1px solid rgba(147,51,234,0.25); border-radius:8px; color:#e9d5ff; margin-bottom:10px;">📝 Write Excerpt</button>
+            <button class="ai-action" data-action="content" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(147,51,234,0.15); border:1px solid rgba(147,51,234,0.25); border-radius:8px; color:#e9d5ff; margin-bottom:10px;">✨ Enhance Content</button>
+            <button class="ai-action" data-action="tags" style="width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px; background: rgba(147,51,234,0.15); border:1px solid rgba(147,51,234,0.25); border-radius:8px; color:#e9d5ff;">💡 Suggest Tags</button>
+            <div id="ai-tip" style="margin-top:16px; font-size:12px; color:#c4b5fd; border:1px solid rgba(147,51,234,0.25); background: rgba(147,51,234,0.08); border-radius:8px; padding:10px;">Provide a little context to get better suggestions.</div>
+            <div id="ai-loading" style="display:none; margin-top:12px; font-size:12px; color:#a78bfa;">Working…</div>
+        </div>
+    </div>
+
     <script>
         const dropZone = document.getElementById('blog-drop-zone');
         const fileInput = document.getElementById('featured_image');
@@ -349,8 +369,57 @@
             var html = '<p>' + text.trim().replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') + '</p>';
             quill.root.innerHTML = html;
             contentArea.value = quill.root.innerHTML;
-            document.getElementById('tags').value = extractTags(text);
         }
+
+        // AI Assistant Logic
+        const aiToggle = document.getElementById('ai-toggle');
+        const aiPanel = document.getElementById('ai-panel');
+        const aiClose = document.getElementById('ai-close');
+        const aiLoadingEl = document.getElementById('ai-loading');
+        const aiActions = document.querySelectorAll('.ai-action');
+
+        let aiBusy = false;
+        function openAiPanel() { aiPanel.style.transform = 'translateX(0)'; }
+        function closeAiPanel() { aiPanel.style.transform = 'translateX(100%)'; }
+        aiToggle.addEventListener('click', openAiPanel);
+        aiClose.addEventListener('click', closeAiPanel);
+
+        async function simulateAI() {
+            aiBusy = true;
+            aiLoadingEl.style.display = 'block';
+            await new Promise(r => setTimeout(r, 1200));
+            aiLoadingEl.style.display = 'none';
+            aiBusy = false;
+        }
+
+        function setIfEmpty(inputEl, value) {
+            if (!inputEl.value || inputEl.value.trim() === '') inputEl.value = value;
+        }
+
+        aiActions.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                if (aiBusy) return;
+                const action = btn.getAttribute('data-action');
+                await simulateAI();
+                if (action === 'title') {
+                    const titleEl = document.getElementById('title');
+                    setIfEmpty(titleEl, "Sustainable Architecture: Building Tomorrow's Green Cities");
+                    titleEl.focus();
+                } else if (action === 'excerpt') {
+                    const excerptEl = document.getElementById('excerpt');
+                    setIfEmpty(excerptEl, 'Explore how modern sustainable architecture is revolutionizing urban development with eco-friendly designs that prioritize both aesthetics and environmental responsibility.');
+                    excerptEl.focus();
+                } else if (action === 'content') {
+                    const current = quill.root.innerHTML || '';
+                    quill.root.innerHTML = (current + '<p>✨ AI Enhanced: Added compelling narrative structure, improved readability, and optimized SEO keywords.</p>').trim();
+                    contentArea.value = quill.root.innerHTML;
+                } else if (action === 'tags') {
+                    const tagsEl = document.getElementById('tags');
+                    setIfEmpty(tagsEl, 'sustainable architecture, green building, eco-design, urban development, LEED certification');
+                    tagsEl.focus();
+                }
+            });
+        });
 
         function extractTags(text) {
             const keywords = text.match(/\b(Design|Sustainable|Office|Wellness|Biophilic|Flexibility|Technology|Green|Eco|Architecture|Nature|Sri Lanka|Minimalist|Residential|Commercial)\b/gi) || [];
