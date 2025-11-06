@@ -8,6 +8,7 @@
     <title>Septan Developers - Build Your Vision</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
     <style>
         /* Enhanced Carousel Styles */
         .enhanced-carousel-container {
@@ -1151,6 +1152,9 @@
             }, 250);
         });
     </script>
+    
+    <!-- Septan AI Chatbot -->
+    @include('partials.chatbot')
 </body>
 </html>
 

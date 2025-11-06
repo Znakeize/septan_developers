@@ -192,5 +192,8 @@
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    
+    <!-- Septan AI Chatbot -->
+    @include('partials.chatbot')
 </body>
 </html>

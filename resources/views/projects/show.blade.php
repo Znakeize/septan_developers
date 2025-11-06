@@ -6,6 +6,7 @@
     <title>{{ $project->title }} - Septan Developers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Arial', sans-serif; background: #000; color: #fff; overflow-x: hidden; scroll-behavior: smooth; }
@@ -627,5 +628,8 @@
             form.reset();
         });
     </script>
+    
+    <!-- Septan AI Chatbot -->
+    @include('partials.chatbot')
 </body>
 </html>

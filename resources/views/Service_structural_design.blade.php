@@ -6,6 +6,7 @@
     <title>Structural Design - Septan Developers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
 </head>
 <body data-page="structural-design">
     <nav>
@@ -195,5 +196,8 @@
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    
+    <!-- Septan AI Chatbot -->
+    @include('partials.chatbot')
 </body>
 </html>
