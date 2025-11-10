@@ -66,6 +66,7 @@
             font-size: 12px;
             font-weight: 600;
             text-transform: uppercase;
+            text-align: center;
             margin-bottom: 15px;
         }
         .blog-content h3 {
@@ -192,7 +193,7 @@
             <div class="blog-card" onclick="window.location.href='{{ route('blogs.show', $blog->slug) }}'" style="cursor: pointer;">
                 <div class="blog-image" style="background-image: url('{{ $blog->featured_image ? asset('storage/' . $blog->featured_image) : asset('assets/img/default-blog.jpg') }}');"></div>
                 <div class="blog-content">
-                    <span class="blog-category">{{ $blog->category }}</span>
+                    <span class="blog-category" style="color: #ffffffff;">{{ $blog->category }}</span>
                     <h3>{{ $blog->title }}</h3>
                     <div class="blog-date">{{ $blog->published_date->format('F d, Y') }}</div>
                     <p class="blog-excerpt">{{ Str::limit($blog->excerpt, 120) }}</p>

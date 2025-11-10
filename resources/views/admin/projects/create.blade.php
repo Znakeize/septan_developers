@@ -32,12 +32,16 @@
         .full-width { grid-column: 1 / -1; }
         
         .input-group { position: relative; }
-        .input-group i { position: absolute; left: 12px; top: 14px; color: #999; font-size: 1.1rem; z-index: 1; }
+        .input-group i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #999; font-size: 1.1rem; width: 28px; text-align: center; z-index: 1; pointer-events: none; }
         .input-group input, .input-group textarea, .input-group select {
-            width: 100%; padding: 12px 12px 12px 42px; border: 1px solid #222; border-radius: 6px; background:#0b0b0b;
+            width: 100%; padding: 12px 12px 12px 64px; border: 1px solid #222; border-radius: 6px; background:#0b0b0b;
             color: #e5e5e5; font-size: 14px; transition: border 0.3s ease;
         }
-        .input-group input:focus, .input-group textarea:focus, .input-group select:focus { outline: none; border-color: #dc2626; }
+        .input-group .help-text, .input-group .error { margin-left: 64px; }
+        .input-group select:focus { outline: none; border-color: #dc2626; }
+        .form-container .input-group input,
+        .form-container .input-group textarea,
+        .form-container .input-group select { padding-left: 64px !important; }
         
         .drop-zone {
             position: relative; width: 100%; min-height: 140px; background: #0b0b0b; border: 2px dashed #222;
@@ -65,6 +69,11 @@
         
         .error { color: #dc2626; font-size: 13px; margin-top: 5px; }
         .help-text { font-size: 12px; color: #9ca3af; margin-top: 5px; }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .form-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+        }
     </style>
 </head>
 <body>

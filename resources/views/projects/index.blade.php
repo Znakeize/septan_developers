@@ -192,6 +192,7 @@
                     <h3>{{ $project->title }}</h3>
                     <p>{{ $project->location }} • {{ $project->year }}</p>
                     <p style="color:#dc2626;text-transform:uppercase;font-weight:700;">{{ $project->type }}</p>
+                    <p class="project-excerpt">{{ Str::limit($project->description, 120) }}</p>
                 </div>
             </div>
             @endforeach
