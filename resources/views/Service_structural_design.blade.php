@@ -188,8 +188,8 @@
                 <a href="https://youtube.com/@SeptanDevelopers" target="_blank"><i class="fab fa-youtube"></i></a>
             </div>
             <div class="footer-links">
-                <a href="#">Terms</a>
-                <a href="#">Privacy</a>
+                <a href="{{ route('legal.terms') }}">Terms</a>
+                <a href="{{ route('legal.privacy') }}">Privacy</a>
             </div>
             <div class="copyright">
                 &copy; 2025 Septan Developers. All rights reserved.

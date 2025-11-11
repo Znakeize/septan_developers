@@ -95,6 +95,14 @@ Route::get('/services/structural-design', function () use ($getHeroImages) {
      return view('Service_structural_design', compact('heroImages'));
  })->name('services.structural_design');
 
+// Legal pages
+Route::get('/terms', function () {
+     return view('terms');
+})->name('legal.terms');
+Route::get('/privacy', function () {
+     return view('privacy');
+})->name('legal.privacy');
+
 // Public Projects
 Route::prefix('projects')->name('projects.')->group(function () {
      Route::get('/', [PublicProjectController::class, 'index'])->name('index');
