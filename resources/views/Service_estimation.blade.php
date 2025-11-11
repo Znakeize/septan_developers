@@ -6,9 +6,11 @@
     <title>Estimation & Consultation - Septan Developers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    @include('partials.animations-init')
     <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
 </head>
 <body data-page="estimation-page">
+    @include('partials.page-loader')
     <nav>
         <div class="nav-container">
         <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
@@ -56,18 +58,18 @@
         </div>
     </section>
 
-    <section>
+    <section data-aos="fade-up">
         <div class="section-container">
-            <h3>Transparent Cost Management</h3>
+            <h3 data-aos="fade-up" data-aos-delay="100">Transparent Cost Management</h3>
             <p>Accurate cost estimation is crucial for successful project planning and execution. Our estimation services provide detailed, transparent breakdowns of all project costs, helping you make informed financial decisions and avoid unexpected expenses.</p>
             <p>Our consultation services offer expert guidance on design feasibility, material selection, construction methods, and regulatory requirements, ensuring your project is set up for success from the start.</p>
             <p>We combine years of industry experience with current market knowledge to deliver estimates that are both accurate and realistic, giving you confidence in your project budget.</p>
         </div>
     </section>
 
-    <section style="background: #111;">
+    <section style="background: #111;" data-aos="fade-up">
         <div class="section-container">
-            <h2>OUR <span>EXPERTISE</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">OUR <span>EXPERTISE</span></h2>
             <div class="service-features">
                 <div class="feature-box">
                     <h4>Detailed Cost Breakdown</h4>
@@ -97,7 +99,7 @@
         </div>
     </section>
 
-    <section class="process-section">
+    <section class="process-section" data-aos="fade-up">
         <div class="section-container">
             <h2>ESTIMATION <span>APPROACH</span></h2>
             <div class="process-steps">
@@ -126,7 +128,7 @@
     </section>
 
      <!-- Contact Section -->
-    <section id="contact" class="light">
+    <section id="contact" class="light" data-aos="fade-up">
         <div class="section-container">
             <h2>GET IN <span>TOUCH</span></h2>
             <div class="contact-container">
@@ -192,6 +194,7 @@
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @include('partials.animations-script')
     
     <!-- Septan AI Chatbot -->
     @include('partials.chatbot')

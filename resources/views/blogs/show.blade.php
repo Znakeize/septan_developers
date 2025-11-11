@@ -6,6 +6,7 @@
     <title>{{ $blog->title }} - Septan Developers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    @include('partials.animations-init')
     <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -500,6 +501,7 @@
     </style>
 </head>
 <body>
+    @include('partials.page-loader')
     <nav>
         <div class="nav-container">
             <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
@@ -541,7 +543,7 @@
         </div>
     </section>
 
-    <section class="blog-content">
+    <section class="blog-content" data-aos="fade-up">
         <div class="content-container">
             <div class="featured-image" style="background-image: url('{{ $blog->featured_image ? asset('storage/' . $blog->featured_image) : asset('assets/img/default-blog.jpg') }}');"></div>
 
@@ -575,7 +577,7 @@
     </section>
 
     @if($relatedBlogs->count() > 0)
-    <section class="related-posts">
+    <section class="related-posts" data-aos="fade-up">
         <div class="section-container">
             <h2 class="section-title">RELATED <span>ARTICLES</span></h2>
             <div class="posts-grid">
@@ -594,7 +596,7 @@
     </section>
     @endif
 
-    <section id="contact" style="background: #111;">
+    <section id="contact" style="background: #111;" data-aos="fade-up">
         <div class="section-container">
             <h2 class="section-title">GET IN <span>TOUCH</span></h2>
             <div class="contact-container">
@@ -666,6 +668,7 @@
             form.reset();
         });
     </script>
+    @include('partials.animations-script')
     
     <!-- Septan AI Chatbot -->
     @include('partials.chatbot')

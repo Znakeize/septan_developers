@@ -6,6 +6,7 @@
     <title>Projects - Septan Developers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    @include('partials.animations-init')
     <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
     <style>
         .projects-page-header {
@@ -122,6 +123,7 @@
     </style>
 </head>
 <body>
+    @include('partials.page-loader')
     <nav>
         <div class="nav-container">
             <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
@@ -169,7 +171,7 @@
         </div>
     </section>
 
-    <section class="projects-section">
+    <section class="projects-section" data-aos="fade-up">
         @php
             $categories = $projects->pluck('category')->filter()->unique()->values();
             $hasRenovation = $categories->contains(function($c){ return strtolower($c) === 'renovation'; });
@@ -222,6 +224,7 @@
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @include('partials.animations-script')
     
     <!-- Septan AI Chatbot -->
     @include('partials.chatbot')

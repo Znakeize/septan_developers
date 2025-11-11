@@ -6,9 +6,11 @@
     <title>Structural Design - Septan Developers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    @include('partials.animations-init')
     <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
 </head>
 <body data-page="structural-design">
+    @include('partials.page-loader')
     <nav>
         <div class="nav-container">
             <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
@@ -58,9 +60,9 @@
         </div>
     </section>
 
-    <section>
+    <section data-aos="fade-up">
         <div class="section-container">
-            <h3>Advanced Structural Engineering</h3>
+            <h3 data-aos="fade-up" data-aos-delay="100">Advanced Structural Engineering</h3>
             <p>Our structural engineering services ensure that every building we design is safe, durable, and built to last. We use advanced analysis techniques and industry-leading software to create structural systems that meet all safety codes while optimizing material efficiency.</p>
             
             <p>From foundation design to roof framing, we handle all aspects of structural engineering with precision and expertise. Our engineers work collaboratively with architects to ensure structural integrity never compromises aesthetic vision.</p>
@@ -69,9 +71,9 @@
         </div>
     </section>
 
-    <section style="background: #111;">
+    <section style="background: #111;" data-aos="fade-up">
         <div class="section-container">
-            <h2>ENGINEERING <span>EXPERTISE</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">ENGINEERING <span>EXPERTISE</span></h2>
             <div class="service-features">
                 <div class="feature-box">
                     <h4>Foundation Design</h4>
@@ -101,9 +103,9 @@
         </div>
     </section>
 
-    <section class="process-section">
+    <section class="process-section" data-aos="fade-up">
         <div class="section-container">
-            <h2>ENGINEERING <span>WORKFLOW</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">ENGINEERING <span>WORKFLOW</span></h2>
             <div class="process-steps">
                 <div class="process-step">
                     <div class="step-number">1</div>
@@ -129,8 +131,8 @@
         </div>
     </section>
 
-   <!-- Contact Section -->
-    <section id="contact" class="light">
+    <!-- Contact Section -->
+    <section id="contact" class="light" data-aos="fade-up">
         <div class="section-container">
             <h2>GET IN <span>TOUCH</span></h2>
             <div class="contact-container">
@@ -196,6 +198,7 @@
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @include('partials.animations-script')
     
     <!-- Septan AI Chatbot -->
     @include('partials.chatbot')

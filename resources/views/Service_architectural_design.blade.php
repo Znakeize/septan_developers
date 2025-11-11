@@ -6,9 +6,11 @@
     <title>Architectural Design - Septan Developers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    @include('partials.animations-init')
     <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
 </head>
 <body data-page="architectural-design">
+    @include('partials.page-loader')
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -61,9 +63,9 @@
     </section>
 
     <!-- Service Overview -->
-    <section>
+    <section data-aos="fade-up">
         <div class="section-container">
-            <h3>Comprehensive Architectural Services</h3>
+            <h3 data-aos="fade-up" data-aos-delay="100">Comprehensive Architectural Services</h3>
             <p>At Septan Developers, we specialize in creating architectural designs that are not only visually stunning but also functionally superior. Our approach combines cutting-edge design principles with sustainable practices to deliver spaces that inspire and endure.</p>
             
             <p>We work closely with clients to understand their vision, requirements, and constraints, translating them into architectural masterpieces that exceed expectations. From residential homes to commercial complexes, our architectural designs prioritize sustainability, functionality, and timeless beauty.</p>
@@ -73,7 +75,7 @@
     </section>
 
     <!-- Service Features -->
-    <section class="dark-section">
+    <section class="dark-section" data-aos="fade-up">
         <div class="section-container">
             <h2>OUR <span>CAPABILITIES</span></h2>
             <div class="service-features">
@@ -106,9 +108,9 @@
     </section>
 
     <!-- Design Process -->
-    <section class="process-section">
+    <section class="process-section" data-aos="fade-up">
         <div class="section-container">
-            <h2>OUR DESIGN <span>PROCESS</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">OUR DESIGN <span>PROCESS</span></h2>
             <div class="process-steps">
                 <div class="process-step">
                     <div class="step-number">1</div>
@@ -135,7 +137,7 @@
     </section>
 
      <!-- Contact Section -->
-    <section id="contact" class="light">
+    <section id="contact" class="light" data-aos="fade-up">
         <div class="section-container">
             <h2>GET IN <span>TOUCH</span></h2>
             <div class="contact-container">
@@ -201,6 +203,7 @@
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @include('partials.animations-script')
     
     <!-- Septan AI Chatbot -->
     @include('partials.chatbot')

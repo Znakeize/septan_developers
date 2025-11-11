@@ -6,9 +6,11 @@
     <title>Project Management - Septan Developers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    @include('partials.animations-init')
     <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
 </head>
 <body data-page="project-management">
+    @include('partials.page-loader')
     <nav>
         <div class="nav-container">     
             <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
@@ -56,18 +58,18 @@
         </div>
     </section>
 
-    <section>
+    <section data-aos="fade-up">
         <div class="section-container">
-            <h3>Comprehensive Project Oversight</h3>
+            <h3 data-aos="fade-up" data-aos-delay="100">Comprehensive Project Oversight</h3>
             <p>Our project management services ensure that your construction project is delivered on time, within budget, and to the highest quality standards. We coordinate all aspects of the project, managing teams, resources, and timelines to achieve successful outcomes.</p>
             <p>From initial planning through final handover, our experienced project managers serve as your single point of contact, providing regular updates and proactively addressing challenges before they impact your project.</p>
             <p>We employ industry-leading project management methodologies and tools to maintain control over scope, schedule, cost, and quality throughout the entire construction process.</p>
         </div>
     </section>
 
-    <section style="background: #111;">
+    <section style="background: #111;" data-aos="fade-up">
         <div class="section-container">
-            <h2>MANAGEMENT <span>SERVICES</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">MANAGEMENT <span>SERVICES</span></h2>
             <div class="service-features">
                 <div class="feature-box">
                     <h4>Planning & Scheduling</h4>
@@ -97,7 +99,7 @@
         </div>
     </section>
 
-    <section class="process-section">
+    <section class="process-section" data-aos="fade-up">
         <div class="section-container">
             <h2>MANAGEMENT <span>FRAMEWORK</span></h2>
             <div class="process-steps">
@@ -126,7 +128,7 @@
     </section>
 
      <!-- Contact Section -->
-    <section id="contact" class="light">
+    <section id="contact" class="light" data-aos="fade-up">
         <div class="section-container">
             <h2>GET IN <span>TOUCH</span></h2>
             <div class="contact-container">
@@ -192,6 +194,7 @@
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @include('partials.animations-script')
     
     <!-- Septan AI Chatbot -->
     @include('partials.chatbot')

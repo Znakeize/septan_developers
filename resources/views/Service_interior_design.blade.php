@@ -6,9 +6,11 @@
     <title>Interior Design - Septan Developers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    
+    @include('partials.animations-init')
+    <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
 </head>
 <body data-page="interior-design">
+    @include('partials.page-loader')
     <nav>
         <div class="nav-container">
         <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
@@ -56,18 +58,18 @@
         </div>
     </section>
 
-    <section>
+    <section data-aos="fade-up">
         <div class="section-container">
-            <h3>Creating Beautiful Interiors</h3>
+            <h3 data-aos="fade-up" data-aos-delay="100">Creating Beautiful Interiors</h3>
             <p>Our interior design services focus on creating spaces that are both aesthetically pleasing and highly functional. We believe that great interior design goes beyond visual appealâ€”it enhances the way people live, work, and interact with their environment.</p>
             <p>From concept to completion, we handle every aspect of interior design including space planning, material selection, furniture design, lighting design, and decorative elements. Our designs reflect your unique style while incorporating the latest trends and timeless principles.</p>
             <p>Whether you're renovating a single room or designing an entire building, our team brings creativity, attention to detail, and a commitment to excellence to every project.</p>
         </div>
     </section>
 
-    <section style="background: #111;">
+    <section style="background: #111;" data-aos="fade-up">
         <div class="section-container">
-            <h2>DESIGN <span>SERVICES</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">DESIGN <span>SERVICES</span></h2>
             <div class="service-features">
                 <div class="feature-box">
                     <h4>Space Planning</h4>
@@ -97,7 +99,7 @@
         </div>
     </section>
 
-    <section class="process-section">
+    <section class="process-section" data-aos="fade-up">
         <div class="section-container">
             <h2>DESIGN <span>JOURNEY</span></h2>
             <div class="process-steps">
@@ -126,7 +128,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="light">
+    <section id="contact" class="light" data-aos="fade-up">
         <div class="section-container">
             <h2>GET IN <span>TOUCH</span></h2>
             <div class="contact-container">
@@ -192,6 +194,7 @@
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @include('partials.animations-script')
     
     <!-- Septan AI Chatbot -->
     @include('partials.chatbot')

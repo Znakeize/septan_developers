@@ -6,6 +6,7 @@
     <title>{{ $project->title }} - Septan Developers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    @include('partials.animations-init')
     <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -379,6 +380,7 @@
     </style>
 </head>
 <body>
+    @include('partials.page-loader')
     <nav>
         <div class="nav-container">
             <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
@@ -414,7 +416,7 @@
         </div>
     </section>
 
-    <section class="project-details">
+    <section class="project-details" data-aos="fade-up">
         <div class="details-container">
             <div class="project-info-grid">
                 <div class="info-card">
@@ -445,7 +447,7 @@
     </section>
 
     @if(is_array($project->features) && count(array_filter($project->features)) > 0)
-    <section style="background:#000; padding:80px 20px;">
+    <section style="background:#000; padding:80px 20px;" data-aos="fade-up">
         <div class="section-container">
             <h2>PROJECT <span>FEATURES</span></h2>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;">
@@ -470,7 +472,7 @@
     @endif
 
     @if(($project->video_url || ($project->gallery_images && count($project->gallery_images) > 0)))
-    <section class="project-gallery">
+    <section class="project-gallery" data-aos="fade-up">
         <div class="section-container">
             <h2>PROJECT <span>GALLERY</span></h2>
             <div class="gallery-hero">
@@ -580,6 +582,7 @@
 </div>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @include('partials.animations-script')
     <script>
         function toggleMenu() {
             document.getElementById('nav-menu').classList.toggle('active');

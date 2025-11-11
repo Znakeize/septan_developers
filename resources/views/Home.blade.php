@@ -8,6 +8,7 @@
     <title>Septan Developers - Build Your Vision</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    @include('partials.animations-init')
     <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
     <style>
         /* Enhanced Carousel Styles */
@@ -236,6 +237,7 @@
     </style>
 </head>
 <body data-page="index">
+    @include('partials.page-loader')
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -295,19 +297,19 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="dark">
+    <section id="about" class="dark" data-aos="fade-up">
         <div class="section-container">
-            <h2>ABOUT <span>SEPTAN DEVELOPERS</span></h2>
-            <div class="about-content">
+            <h2 data-aos="fade-up" data-aos-delay="100">ABOUT <span>SEPTAN DEVELOPERS</span></h2>
+            <div class="about-content" data-aos="fade-up" data-aos-delay="200">
                 <p>Founded in 2020, we blend modern architecture with natural elements to create innovative spaces. We've completed over 300 projects, focusing on sustainability and client satisfaction.</p>
             </div>
         </div>
     </section>
 
     <!-- Stats Section with Animated Icons -->
-    <section class="light">
+    <section class="light" data-aos="fade-up">
         <div class="section-container">
-            <h2>OUR <span>ACHIEVEMENTS</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">OUR <span>ACHIEVEMENTS</span></h2>
             <div class="stats-wrapper">
                 <!-- Years Card with Cube Animation -->
                 <div class="stat-card" id="card-years">
@@ -365,15 +367,15 @@
     </section>
 
     <!-- Vision Mission Section -->
-    <section class="dark">
+    <section class="dark" data-aos="fade-up">
         <div class="section-container">
-            <h2>VISION & <span>MISSION</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">VISION & <span>MISSION</span></h2>
             <div class="vision-mission-grid">
-                <div class="vm-card">
+                <div class="vm-card" data-aos="fade-up" data-aos-delay="200">
                     <h3>Vision</h3>
                     <p>To pioneer a global standard in sustainable construction, leading Sri Lanka's architectural landscape with groundbreaking innovations that set benchmarks for environmental stewardship, community enrichment, and timeless design excellence.</p>
                 </div>
-                <div class="vm-card">
+                <div class="vm-card" data-aos="fade-up" data-aos-delay="300">
                     <h3>Mission</h3>
                     <p>To provide exceptional architectural and engineering services, prioritizing client satisfaction, environmental responsibility, and cutting-edge technology to create timeless structures.</p>
                 </div>
@@ -382,11 +384,11 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="light">
+    <section id="services" class="light" data-aos="fade-up">
         <div class="section-container">
-            <h2>OUR <span>SERVICES</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">OUR <span>SERVICES</span></h2>
             <div class="services-grid">
-                <div class="service-card" data-href="{{route('services.architectural_design')}}">
+                <div class="service-card" data-href="{{route('services.architectural_design')}}" data-aos="fade-up" data-aos-delay="200">
                     <div class="icon-wrap">
                     <svg class="house-scene" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
                      <defs>
@@ -429,7 +431,7 @@
                     <p>Striking facades integrating stone, wood, and metal with nature. We create innovative designs that blend modern aesthetics with environmental harmony.</p>
                     
                 </div>
-                <div class="service-card" data-href="{{route('services.structural_design')}}">
+                <div class="service-card" data-href="{{route('services.structural_design')}}" data-aos="fade-up" data-aos-delay="300">
                     <div class="icon-wrap">
         <svg class="structure-scene" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
           <defs>
@@ -493,7 +495,7 @@
                     <p>Robust engineering for durable, safe structures. Our structural solutions ensure longevity and safety while maintaining design integrity.</p>
                     
                 </div>
-<div class="service-card" data-href="{{route('services.bim')}}">
+<div class="service-card" data-href="{{route('services.bim')}}" data-aos="fade-up" data-aos-delay="400">
        <div class="icon-wrap">
         <svg class="bim-scene" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
           <defs>
@@ -588,7 +590,7 @@
                     
                 </div>
 
-                <div class="service-card" data-href="{{route('services.interior_design')}}">
+                <div class="service-card" data-href="{{route('services.interior_design')}}" data-aos="fade-up" data-aos-delay="500">
                    <div class="icon-wrap">
         <svg class="interior-scene" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
           <defs>
@@ -679,7 +681,7 @@
                     <p>Functional and aesthetic indoor spaces. We transform interiors into inspiring environments that reflect your vision and lifestyle.</p>
                     
                 </div>
-                <div class="service-card" data-href="{{route('services.3d_rendering')}}">
+                <div class="service-card" data-href="{{route('services.3d_rendering')}}" data-aos="fade-up" data-aos-delay="600">
                      <div class="icon-wrap">
         <svg class="render-scene" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
           <defs>
@@ -729,7 +731,7 @@
                     <p>High-quality 3D models and virtual tours for design previews. Experience your project before construction begins.</p>
                     
                 </div>
-                <div class="service-card" data-href="{{route('services.estimation')}}">
+                <div class="service-card" data-href="{{route('services.estimation')}}" data-aos="fade-up" data-aos-delay="700">
                     <div class="service-icon-wrap">
                         <svg class="estimation-scene" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
                             <defs>
@@ -751,7 +753,7 @@
                     <p>Accurate cost estimates and expert consultation services. We provide transparent pricing and professional guidance throughout your project.</p>
                     
                 </div>
-                <div class="service-card" data-href="{{route('services.project_management')}}">
+                <div class="service-card" data-href="{{route('services.project_management')}}" data-aos="fade-up" data-aos-delay="800">
                    <div class="service-icon-wrap">
                         <svg class="gantt-scene" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
                             <defs>
@@ -776,9 +778,9 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="dark">
+    <section id="projects" class="dark" data-aos="fade-up">
         <div class="section-container">
-            <h2>OUR <span>PROJECTS</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">OUR <span>PROJECTS</span></h2>
             @if(isset($projects) && $projects->count() > 0)
             <div class="enhanced-carousel-container" data-carousel-type="projects">
                 <div class="enhanced-carousel-wrapper" 
@@ -818,11 +820,11 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="light">
+    <section id="testimonials" class="light" data-aos="fade-up">
         <div class="section-container">
-            <h2>CLIENT <span>TESTIMONIALS</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">CLIENT <span>TESTIMONIALS</span></h2>
             <div class="testimonials-grid">
-                <div class="testimonial-card">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="stars">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -834,7 +836,7 @@
                     <div class="testimonial-author">Brianna Diaz</div>
                     <div class="testimonial-position">United States of America</div>
                 </div>
-                <div class="testimonial-card">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="stars">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -846,7 +848,7 @@
                     <div class="testimonial-author">Jane Smith</div>
                     <div class="testimonial-position">United Kingdom</div>
                 </div>
-                <div class="testimonial-card">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="400">
                     <div class="stars">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -858,7 +860,7 @@
                     <div class="testimonial-author">Simon Baker</div>
                     <div class="testimonial-position">Australia</div>
                 </div>
-                <div class="testimonial-card">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="500">
                     <div class="stars">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -870,7 +872,7 @@
                     <div class="testimonial-author">Rose Elizabeth</div>
                     <div class="testimonial-position">Ierland</div>
                 </div>
-                <div class="testimonial-card">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="600">
                     <div class="stars">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -882,7 +884,7 @@
                     <div class="testimonial-author">Daniel Caba</div>
                     <div class="testimonial-position">Switzerland</div>
                 </div>
-<div class="testimonial-card">
+<div class="testimonial-card" data-aos="fade-up" data-aos-delay="700">
                     <div class="stars">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -899,9 +901,9 @@
     </section>
 
     <!-- Blog Section -->
-    <section id="blog" class="dark">
+    <section id="blog" class="dark" data-aos="fade-up">
         <div class="section-container">
-            <h2>LATEST <span>ARTICLES</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">LATEST <span>ARTICLES</span></h2>
             @if(isset($latestBlogs) && $latestBlogs->count() > 0)
             <div class="enhanced-carousel-container" data-carousel-type="blog">
                 <div class="enhanced-carousel-wrapper" 
@@ -942,9 +944,9 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="light">
+    <section id="contact" class="light" data-aos="fade-up">
         <div class="section-container">
-            <h2>GET IN <span>TOUCH</span></h2>
+            <h2 data-aos="fade-up" data-aos-delay="100">GET IN <span>TOUCH</span></h2>
             <div class="contact-container">
                 <form id="contact-form">
                     <input type="hidden" id="csrf_token" name="csrf_token">
@@ -1008,6 +1010,7 @@
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @include('partials.animations-script')
     <script>
         // Enhanced Carousel state management
         const carouselStates = {

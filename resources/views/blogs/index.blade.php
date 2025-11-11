@@ -139,6 +139,7 @@
     </style>
 </head>
 <body>
+    @include('partials.page-loader')
     <nav>
         <div class="nav-container">
             <div class="logo"><a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
@@ -186,7 +187,7 @@
         </div>
     </section>
 
-    <section class="blogs-section">
+    <section class="blogs-section" data-aos="fade-up">
         @if($blogs->count() > 0)
         <div class="blogs-grid">
             @foreach($blogs as $blog)
@@ -232,6 +233,7 @@
     </footer>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @include('partials.animations-script')
     
     <!-- Septan AI Chatbot -->
     @include('partials.chatbot')

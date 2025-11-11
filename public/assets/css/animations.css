@@ -1,0 +1,421 @@
+/* ============================================
+   ANIMATIONS & TRANSITIONS
+   ============================================ */
+
+/* Page Loader - Smooth loading animation with fade-out effect */
+.page-loader {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+}
+
+.page-loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.loader-logo {
+    height: 80px;
+    width: auto;
+    opacity: 0;
+    animation: fadeInScale 1s ease 0.2s forwards, logoFloat 3s ease-in-out 1.2s infinite;
+    filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.5));
+}
+
+.loader-text {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #dc2626;
+    letter-spacing: 3px;
+    opacity: 0;
+    animation: fadeInUp 1s ease 0.5s forwards, pulse 2s ease 1.5s infinite;
+    text-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+    50% { 
+        opacity: 0.8; 
+        transform: scale(0.98); 
+    }
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Enhanced CTA Button - Gradient animation with shine effect on hover */
+.cta-button:not(.small) {
+    background: linear-gradient(90deg, #dc2626 0%, #f97316 100%) !important;
+    background-size: 200% auto !important;
+    color: #fff !important;
+    padding: 1.2rem 3rem !important;
+    border: 2px solid #dc2626 !important;
+    border-radius: 999px !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    letter-spacing: 2px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 8px 24px rgba(220, 38, 38, 0.25) !important;
+}
+
+.cta-button:not(.small)::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+    transition: left 2.5s cubic-bezier(0, 0, 0.2, 1) !important;
+    z-index: 1 !important;
+}
+
+.cta-button:not(.small):hover::before {
+    left: 100% !important;
+}
+
+.cta-button:not(.small):hover {
+    background-position: 100% 0 !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4) !important;
+    border-color: rgba(239, 68, 68, 0.7) !important;
+}
+
+/* Hero section CTA button with fade-in animation */
+.hero .cta-button {
+    opacity: 0;
+    animation: fadeInUp 1s ease 0.9s forwards;
+}
+
+/* Navigation Links - Animated underline on hover */
+nav ul li a {
+    position: relative !important;
+    padding-bottom: 4px !important;
+}
+
+nav ul li a::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 0 !important;
+    height: 2px !important;
+    background: #dc2626 !important;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+    width: 100% !important;
+}
+
+/* Don't show underline on dropdown parent when dropdown is open */
+nav ul li.dropdown:hover > a::after {
+    width: 0 !important;
+}
+
+/* Card Hover States - Transform, shadow, and border color transitions */
+.service-card,
+.project-card,
+.blog-card,
+.testimonial-card,
+.vm-card,
+.feature-box {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover,
+.project-card:hover,
+.blog-card:hover,
+.testimonial-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(220, 38, 38, 0.3);
+    border-color: #dc2626;
+}
+
+.vm-card:hover,
+.feature-box:hover {
+    transform: translateX(10px);
+    border-color: #dc2626;
+}
+
+/* Scrolling Text - Infinite horizontal scroll animations */
+.scroll-text {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 3px;
+    opacity: 0.2;
+    z-index: 2;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.scroll-text.top {
+    top: 20%;
+    animation: scrollRight 25s linear infinite;
+}
+
+.scroll-text.bottom {
+    bottom: 20%;
+    animation: scrollLeft 25s linear infinite;
+}
+
+@keyframes scrollRight {
+    from { 
+        transform: translateX(-100%); 
+    }
+    to { 
+        transform: translateX(100%); 
+    }
+}
+
+@keyframes scrollLeft {
+    from { 
+        transform: translateX(100%); 
+    }
+    to { 
+        transform: translateX(-100%); 
+    }
+}
+
+/* Smooth Scrolling - Native smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fade Up Animation for AOS */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Optimized animations with cubic-bezier easing */
+.fade-in-up {
+    animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Section animations with Intersection Observer support */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered animation delays */
+.animate-on-scroll.delay-100 { transition-delay: 0.1s; }
+.animate-on-scroll.delay-200 { transition-delay: 0.2s; }
+.animate-on-scroll.delay-300 { transition-delay: 0.3s; }
+.animate-on-scroll.delay-400 { transition-delay: 0.4s; }
+.animate-on-scroll.delay-500 { transition-delay: 0.5s; }
+
+/* Performance optimizations */
+.animate-on-scroll,
+.cta-button,
+.service-card,
+.project-card,
+.blog-card {
+    will-change: transform, opacity;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .animate-on-scroll,
+    .cta-button,
+    .scroll-text,
+    .service-card,
+    .project-card,
+    .blog-card {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Responsive breakpoints for mobile */
+@media (max-width: 768px) {
+    .cta-button {
+        padding: 1rem 2rem;
+        font-size: 0.9rem;
+    }
+    
+    .loader-logo {
+        height: 60px;
+    }
+    
+    .loader-text {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    
+    .loader-content {
+        gap: 15px;
+    }
+    
+    .scroll-text {
+        font-size: 1rem;
+        letter-spacing: 2px;
+    }
+    
+    .animate-on-scroll {
+        transform: translateY(20px);
+    }
+    
+    /* Disable heavy animations on mobile for performance */
+    .service-card::before,
+    .project-card::before,
+    .blog-card::before {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-button {
+        padding: 0.9rem 1.5rem;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+    
+    .loader-logo {
+        height: 50px;
+    }
+    
+    .loader-text {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+    
+    .loader-content {
+        gap: 12px;
+    }
+    
+    .scroll-text {
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+}
+
+/* AOS (Animate On Scroll) custom styles */
+[data-aos] {
+    pointer-events: none;
+}
+
+[data-aos].aos-animate {
+    pointer-events: auto;
+}
+
+/* Enhanced fade-up animation for sections */
+section {
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+section.visible {
+    opacity: 1;
+}
+
+/* Optimized transitions for interactive elements */
+button,
+a,
+input,
+textarea {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Card image hover effects */
+.project-image,
+.blog-image,
+.carousel-item-image {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover .project-image,
+.blog-card:hover .blog-image {
+    transform: scale(1.1);
+}
+
+/* Stats card animations */
+.stat-card {
+    transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.2, 1),
+                opacity 0.8s cubic-bezier(0.2, 0.9, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.stat-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 56px rgba(220, 38, 38, 0.3);
+    border-color: rgba(220, 38, 38, 0.3);
+}
+

@@ -261,19 +261,19 @@ body[data-page="blog-sustainable"] .featured-image { background-image: url('../i
             position: relative;
         }
 
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
-        }
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-        nav ul li a:hover {
-            color: #dc2626;
-        }
+nav ul li a:hover {
+    color: #dc2626;
+}
 
         nav ul li.dropdown > ul {
             display: none;
@@ -419,30 +419,44 @@ body[data-page="blog-sustainable"] .featured-image { background-image: url('../i
         }
 
         .cta-button {
-            background: linear-gradient(135deg, #7f1d1d, #dc2626);
+            background: linear-gradient(90deg, #dc2626 0%, #f97316 100%);
+            background-size: 200% auto;
             color: #fff;
-            padding: 1rem 2.2rem;
-            border: 1px solid rgba(220, 38, 38, 0.5);
-            border-radius: 9999px;
+            padding: 1.2rem 3rem;
+            border: 2px solid #dc2626;
+            border-radius: 999px;
             text-transform: uppercase;
-            font-weight: 800;
+            font-weight: 700;
             text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            display: inline-block;
             letter-spacing: 2px;
-            transition: all 0.25s ease;
-            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.25), inset 0 1px 0 rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
             opacity: 0;
             animation: fadeInUp 1s ease 0.9s forwards;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.25);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 2.5s cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
         }
 
         .cta-button:hover {
-            background: linear-gradient(135deg, #dc2626, #ef4444);
-            color: #fff;
+            background-position: 100% 0;
             transform: translateY(-3px);
-            box-shadow: 0 16px 40px rgba(220, 38, 38, 0.35);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
             border-color: rgba(239, 68, 68, 0.7);
         }
 
