@@ -123,12 +123,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
      Route::resource('blogs', AdminBlogController::class);
      Route::get('social', [AdminSocialMediaController::class, 'index'])->name('social.index');
      Route::post('social', [AdminSocialController::class, 'store'])->name('social.store');
+     Route::post('social/account', [AdminSocialMediaController::class, 'storeAccount'])->name('social.account.store');
      Route::post('social/preview', [AdminSocialMediaController::class, 'previewPost'])->name('social.preview');
      Route::post('social/publish-now', [AdminSocialMediaController::class, 'publishNow'])->name('social.publish-now');
      Route::post('social/schedule', [AdminSocialMediaController::class, 'schedulePost'])->name('social.schedule');
      Route::get('social/connect/{platform}', [AdminSocialMediaController::class, 'connectAccount'])->name('social.connect');
      Route::get('social/callback/{platform}', [AdminSocialMediaController::class, 'handleCallback'])->name('social.callback');
      Route::delete('social/disconnect/{account}', [AdminSocialMediaController::class, 'disconnectAccount'])->name('social.disconnect');
+     Route::get('social/export-links', [AdminSocialMediaController::class, 'exportLinks'])->name('social.export-links');
      Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
      Route::post('settings/hero-images', [SettingsController::class, 'updateHeroImages'])->name('settings.hero-images.update');
      Route::delete('settings/hero-images/{pageType}/{index}', [SettingsController::class, 'removeHeroImage'])->name('settings.hero-images.remove');

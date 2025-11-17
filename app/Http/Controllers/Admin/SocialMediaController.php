@@ -22,7 +22,95 @@ class SocialMediaController extends Controller
         $recentProjects = \App\Models\Project::latest()->limit(10)->get();
         $recentBlogs = \App\Models\Blog::latest()->limit(10)->get();
 
-        return view('admin.social.index', compact('accounts', 'posts', 'recentProjects', 'recentBlogs'));
+        // Analytics data
+        $analytics = $this->getAnalytics();
+
+        return view('admin.social.index', compact('accounts', 'posts', 'recentProjects', 'recentBlogs', 'analytics'));
+    }
+
+    public function storeAccount(Request $request)
+    {
+        $validated = $request->validate([
+            'platform' => 'required|string',
+            'username' => 'required|string',
+            'profile_url' => 'nullable|url',
+            'access_token' => 'nullable|string',
+        ]);
+
+        SocialMediaAccount::updateOrCreate(
+            [
+                'user_id' => auth()->id(),
+                'platform' => $validated['platform'],
+            ],
+            [
+                'platform_username' => $validated['username'],
+                'access_token' => $validated['access_token'] ?? null,
+                'is_active' => true,
+            ]
+        );
+
+        return response()->json(['success' => true, 'message' => ucfirst($validated['platform']) . ' account connected successfully!']);
+    }
+
+    public function getAnalytics()
+    {
+        $userId = auth()->id();
+        
+        $totalShares = SocialMediaPost::where('user_id', $userId)
+            ->where('status', 'published')
+            ->count();
+        
+        $connectedPlatforms = SocialMediaAccount::where('user_id', $userId)
+            ->where('is_active', true)
+            ->count();
+        
+        $totalReach = $connectedPlatforms * 500; // Estimated reach
+        
+        $publishedPosts = SocialMediaPost::where('user_id', $userId)
+            ->where('status', 'published')
+            ->count();
+        
+        $totalPosts = SocialMediaPost::where('user_id', $userId)->count();
+        $engagement = $totalPosts > 0 ? min(95, ($publishedPosts / $totalPosts) * 100) : 0;
+        
+        $recentActivity = SocialMediaPost::where('user_id', $userId)
+            ->with(['project', 'blog'])
+            ->latest()
+            ->limit(10)
+            ->get()
+            ->map(function($post) {
+                return [
+                    'message' => $post->project 
+                        ? "Shared project: {$post->project->title} to {$post->platform}"
+                        : "Shared blog: {$post->blog->title} to {$post->platform}",
+                    'timestamp' => $post->published_at ?? $post->created_at,
+                    'status' => $post->status,
+                ];
+            });
+
+        return [
+            'total_shares' => $totalShares,
+            'total_reach' => $totalReach,
+            'connected_platforms' => $connectedPlatforms,
+            'engagement' => round($engagement, 1),
+            'recent_activity' => $recentActivity,
+        ];
+    }
+
+    public function exportLinks()
+    {
+        $accounts = SocialMediaAccount::where('user_id', auth()->id())
+            ->where('is_active', true)
+            ->get()
+            ->map(function($account) {
+                return [
+                    'platform' => $account->platform,
+                    'username' => $account->platform_username,
+                    'connected_at' => $account->created_at->toISOString(),
+                ];
+            });
+
+        return response()->json($accounts);
     }
 
     public function connectAccount($platform)

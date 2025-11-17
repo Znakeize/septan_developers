@@ -128,6 +128,8 @@
         document.getElementById('contentId').value = contentId;
         document.getElementById('socialPublishModal').classList.add('active');
     }
+    // Make it available globally
+    window.openSocialModal = openSocialModal;
 
     function closeSocialModal() {
         document.getElementById('socialPublishModal').classList.remove('active');

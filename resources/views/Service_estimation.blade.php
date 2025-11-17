@@ -188,7 +188,7 @@
                 <a href="{{ route('legal.privacy') }}">Privacy</a>
             </div>
             <div class="copyright">
-                &copy; 2025 Septan Developers. All rights reserved. <span style="font-weight:900;letter-spacing:2px;color:#dc2626;">SEPTAN</span>
+                &copy; 2025 Septan Developers. All rights reserved. <br><span style="font-weight:900;letter-spacing:2px;color:#dc2626;">SEPTAN</span>
             </div>
         </div>
     </footer>

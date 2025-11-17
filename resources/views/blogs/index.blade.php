@@ -228,7 +228,7 @@
                 <a href="https://tiktok.com/@septandevelopers" target="_blank"><i class="fab fa-tiktok"></i></a>
                 <a href="https://youtube.com/@SeptanDevelopers" target="_blank"><i class="fab fa-youtube"></i></a>
             </div>
-            <div class="copyright">&copy; 2025 Septan Developers. All rights reserved.</div>
+            <div class="copyright">&copy; 2025 Septan Developers. All rights reserved. <br><span style="font-weight:900;letter-spacing:2px;color:#dc2626;">SEPTAN</span></div>
         </div>
     </footer>
 
