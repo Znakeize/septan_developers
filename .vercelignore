@@ -1,0 +1,10 @@
+.env
+.git
+.gitattributes
+.gitignore
+node_modules
+vendor
+tests
+storage
+phpunit.xml
+README.md
